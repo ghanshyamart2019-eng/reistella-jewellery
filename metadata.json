@@ -1,0 +1,6 @@
+{
+  "name": "ReiStella Jewellery",
+  "description": "ReiStella Jewellery — Let Your Brilliance Reign. Premium fashion jewellery maison and campaign showcase.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
