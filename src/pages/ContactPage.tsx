@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { BRAND_CONFIG } from '../data/brandConfig';
+import { ReiStellaLogo } from '../components/ReiStellaLogo';
 import {
   MessageCircle,
   Instagram,
@@ -31,22 +32,25 @@ export const ContactPage: React.FC<ContactPageProps> = () => {
   };
 
   return (
-    <div className="bg-[#031820] text-neutral-100 selection:bg-[#D4AF37]/30 selection:text-[#D4AF37] pt-28 sm:pt-36 min-h-screen">
+    <div className="bg-[#031820] text-neutral-100 selection:bg-[#D4AF37]/30 selection:text-[#D4AF37] py-20 sm:py-32 border-t border-[#062B3A]">
       {/* Header */}
       <section className="px-6 sm:px-8 lg:px-12 pb-14 max-w-5xl mx-auto text-center space-y-4">
+        <div className="flex justify-center mb-2">
+          <ReiStellaLogo size="md" alt="ReiStella Emblem" />
+        </div>
         <span className="text-[10px] sm:text-[11px] tracking-[0.45em] text-[#D4AF37] uppercase font-light">
           THE CONCIERGE
         </span>
-        <h1 className="font-serif-luxury text-4xl sm:text-6xl md:text-7xl text-white font-light tracking-wide">
+        <h2 className="font-serif-luxury text-4xl sm:text-6xl text-white font-light tracking-wide">
           Contact ReiStella
-        </h1>
+        </h2>
         <p className="text-xs sm:text-sm text-neutral-300 font-light max-w-xl mx-auto tracking-wider">
           Whether you desire a private viewing, styling advisory, or bespoke collection guidance, our ambassadors await your inquiry.
         </p>
       </section>
 
       {/* Main Content: Info & Inquiry Form */}
-      <section className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 pb-32">
+      <section className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 pb-16">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
           {/* Left Column: Direct Channels & Advisory Hours */}
           <div className="lg:col-span-5 space-y-8">
@@ -60,9 +64,9 @@ export const ContactPage: React.FC<ContactPageProps> = () => {
                   <span className="text-[9px] tracking-[0.3em] uppercase font-medium">
                     IMMEDIATE ADVISORY
                   </span>
-                  <h2 className="font-serif-luxury text-2xl text-white font-light">
+                  <h3 className="font-serif-luxury text-2xl text-white font-light">
                     WhatsApp Concierge
-                  </h2>
+                  </h3>
                 </div>
               </div>
 
@@ -83,9 +87,9 @@ export const ContactPage: React.FC<ContactPageProps> = () => {
 
             {/* Other Channels List */}
             <div className="bg-[#020F16] border border-[#062B3A] p-8 space-y-6">
-              <h2 className="font-serif-luxury text-xl text-white font-light border-b border-[#062B3A] pb-3">
+              <h3 className="font-serif-luxury text-xl text-white font-light border-b border-[#062B3A] pb-3">
                 Official Channels
-              </h2>
+              </h3>
 
               <div className="space-y-4">
                 <a
@@ -140,9 +144,9 @@ export const ContactPage: React.FC<ContactPageProps> = () => {
                   PRIVATE INQUIRY
                 </span>
               </div>
-              <h2 className="font-serif-luxury text-3xl sm:text-4xl text-white font-light">
+              <h3 className="font-serif-luxury text-3xl sm:text-4xl text-white font-light">
                 Send a Message to the Concierge
-              </h2>
+              </h3>
               <p className="text-xs text-neutral-400 font-light">
                 Please provide your details below and a dedicated ReiStella specialist will connect with you within 24 hours.
               </p>
@@ -151,38 +155,47 @@ export const ContactPage: React.FC<ContactPageProps> = () => {
             {formSubmitted ? (
               <div className="bg-[#031820] border border-[#D4AF37]/50 p-8 text-center space-y-4">
                 <CheckCircle2 className="w-10 h-10 text-[#D4AF37] mx-auto stroke-[1.5]" />
-                <h3 className="font-serif-luxury text-2xl text-white font-light">
+                <h4 className="font-serif-luxury text-2xl text-white font-light">
                   Inquiry Dispatched
-                </h3>
+                </h4>
                 <p className="text-xs text-neutral-300 font-light max-w-md mx-auto">
                   Thank you for reaching out to ReiStella. Your private concierge advisor will contact you shortly.
                 </p>
                 <button
-                  onClick={() => setFormSubmitted(false)}
-                  className="text-[11px] tracking-[0.2em] uppercase text-[#D4AF37] hover:underline pt-2 inline-block"
+                  onClick={() => {
+                    setFormSubmitted(false);
+                    setFormData({
+                      name: '',
+                      email: '',
+                      phone: '',
+                      inquiryType: 'Private VIP Consultation',
+                      message: ''
+                    });
+                  }}
+                  className="text-xs text-[#D4AF37] uppercase tracking-widest underline pt-2"
                 >
-                  Send another message
+                  Send another inquiry
                 </button>
               </div>
             ) : (
-              <form onSubmit={handleSubmit} className="space-y-6">
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                  <div className="space-y-2">
-                    <label className="text-[10px] tracking-[0.25em] text-neutral-400 uppercase font-light block">
-                      Full Name *
-                    </label>
-                    <input
-                      type="text"
-                      required
-                      value={formData.name}
-                      onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                      placeholder="e.g. Eleanor Vance"
-                      className="w-full bg-[#031820] border border-[#062B3A] focus:border-[#D4AF37] px-4 py-3 text-sm text-white placeholder-neutral-500 focus:outline-none transition-colors font-light"
-                    />
-                  </div>
+              <form onSubmit={handleSubmit} className="space-y-5">
+                <div>
+                  <label className="block text-[10px] tracking-widest uppercase text-neutral-400 mb-2">
+                    Your Full Name *
+                  </label>
+                  <input
+                    type="text"
+                    required
+                    value={formData.name}
+                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                    placeholder="e.g. Lady Vivienne Claire"
+                    className="w-full bg-[#031820] border border-[#062B3A] px-4 py-3.5 text-xs text-white placeholder-neutral-500 focus:outline-none focus:border-[#D4AF37]"
+                  />
+                </div>
 
-                  <div className="space-y-2">
-                    <label className="text-[10px] tracking-[0.25em] text-neutral-400 uppercase font-light block">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                  <div>
+                    <label className="block text-[10px] tracking-widest uppercase text-neutral-400 mb-2">
                       Email Address *
                     </label>
                     <input
@@ -190,63 +203,59 @@ export const ContactPage: React.FC<ContactPageProps> = () => {
                       required
                       value={formData.email}
                       onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                      placeholder="eleanor@domain.com"
-                      className="w-full bg-[#031820] border border-[#062B3A] focus:border-[#D4AF37] px-4 py-3 text-sm text-white placeholder-neutral-500 focus:outline-none transition-colors font-light"
+                      placeholder="vivienne@example.com"
+                      className="w-full bg-[#031820] border border-[#062B3A] px-4 py-3.5 text-xs text-white placeholder-neutral-500 focus:outline-none focus:border-[#D4AF37]"
                     />
                   </div>
-                </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                  <div className="space-y-2">
-                    <label className="text-[10px] tracking-[0.25em] text-neutral-400 uppercase font-light block">
-                      Phone / WhatsApp (Optional)
+                  <div>
+                    <label className="block text-[10px] tracking-widest uppercase text-neutral-400 mb-2">
+                      Phone Number / WhatsApp
                     </label>
                     <input
                       type="tel"
                       value={formData.phone}
                       onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                      placeholder="+44 7000 000000"
-                      className="w-full bg-[#031820] border border-[#062B3A] focus:border-[#D4AF37] px-4 py-3 text-sm text-white placeholder-neutral-500 focus:outline-none transition-colors font-light"
+                      placeholder="+91 98765 43210"
+                      className="w-full bg-[#031820] border border-[#062B3A] px-4 py-3.5 text-xs text-white placeholder-neutral-500 focus:outline-none focus:border-[#D4AF37]"
                     />
-                  </div>
-
-                  <div className="space-y-2">
-                    <label className="text-[10px] tracking-[0.25em] text-neutral-400 uppercase font-light block">
-                      Nature of Inquiry *
-                    </label>
-                    <select
-                      value={formData.inquiryType}
-                      onChange={(e) => setFormData({ ...formData, inquiryType: e.target.value })}
-                      className="w-full bg-[#031820] border border-[#062B3A] focus:border-[#D4AF37] px-4 py-3 text-sm text-white focus:outline-none transition-colors font-light"
-                    >
-                      <option value="Private VIP Consultation">Private VIP Consultation</option>
-                      <option value="Collection Styling Advisory">Collection Styling Advisory</option>
-                      <option value="Piece Availability & Sizing">Piece Availability & Sizing</option>
-                      <option value="Press & Editorial Loans">Press & Editorial Loans</option>
-                      <option value="Partner Stockist Inquiry">Partner Stockist Inquiry</option>
-                    </select>
                   </div>
                 </div>
 
-                <div className="space-y-2">
-                  <label className="text-[10px] tracking-[0.25em] text-neutral-400 uppercase font-light block">
-                    Your Message / Desired Pieces *
+                <div>
+                  <label className="block text-[10px] tracking-widest uppercase text-neutral-400 mb-2">
+                    Inquiry Nature
+                  </label>
+                  <select
+                    value={formData.inquiryType}
+                    onChange={(e) => setFormData({ ...formData, inquiryType: e.target.value })}
+                    className="w-full bg-[#031820] border border-[#062B3A] px-4 py-3.5 text-xs text-white focus:outline-none focus:border-[#D4AF37]"
+                  >
+                    <option value="Private VIP Consultation">Private VIP Consultation</option>
+                    <option value="Signature Piece Acquisition">Signature Piece Acquisition</option>
+                    <option value="Regional Partner Showroom Appointment">Regional Partner Showroom Appointment</option>
+                    <option value="Bespoke Styling Guidance">Bespoke Styling Guidance</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label className="block text-[10px] tracking-widest uppercase text-neutral-400 mb-2">
+                    Message or Piece References
                   </label>
                   <textarea
-                    rows={5}
-                    required
+                    rows={4}
                     value={formData.message}
                     onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                    placeholder="Tell us about the pieces or occasion you wish to discover..."
-                    className="w-full bg-[#031820] border border-[#062B3A] focus:border-[#D4AF37] px-4 py-3 text-sm text-white placeholder-neutral-500 focus:outline-none transition-colors font-light resize-none"
+                    placeholder="Tell us about the pieces you admire or your preferred styling requirements..."
+                    className="w-full bg-[#031820] border border-[#062B3A] px-4 py-3.5 text-xs text-white placeholder-neutral-500 focus:outline-none focus:border-[#D4AF37]"
                   />
                 </div>
 
                 <button
                   type="submit"
-                  className="w-full text-xs tracking-[0.3em] uppercase text-[#031820] bg-[#D4AF37] hover:bg-[#E5C158] py-4 transition-colors font-medium shadow-xl"
+                  className="w-full py-4 bg-[#D4AF37] hover:bg-[#E5C158] text-[#031820] text-xs uppercase tracking-[0.25em] font-medium transition-colors shadow-lg"
                 >
-                  Send Inquiry
+                  Transmit Inquiry
                 </button>
               </form>
             )}

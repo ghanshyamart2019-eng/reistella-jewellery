@@ -10,10 +10,11 @@ import { ArrowUpRight, MessageCircle, Sparkles } from 'lucide-react';
 
 interface CollectionsPageProps {
   onNavigate: (pageId: string) => void;
+  onSelectPiece?: (piece: JewelleryPiece) => void;
 }
 
-export const CollectionsPage: React.FC<CollectionsPageProps> = ({ onNavigate }) => {
-  const [selectedPiece, setSelectedPiece] = useState<JewelleryPiece | null>(null);
+export const CollectionsPage: React.FC<CollectionsPageProps> = ({ onNavigate, onSelectPiece }) => {
+  const [internalSelectedPiece, setInternalSelectedPiece] = useState<JewelleryPiece | null>(null);
   const [activeCollectionTab, setActiveCollectionTab] = useState<string>(
     CAMPAIGN_COLLECTIONS[0].id
   );
@@ -26,16 +27,24 @@ export const CollectionsPage: React.FC<CollectionsPageProps> = ({ onNavigate }) 
     (p) => p.collection === activeCollection.title
   );
 
+  const handleCardClick = (piece: JewelleryPiece) => {
+    if (onSelectPiece) {
+      onSelectPiece(piece);
+    } else {
+      setInternalSelectedPiece(piece);
+    }
+  };
+
   return (
-    <div className="bg-[#031820] text-neutral-100 selection:bg-[#D4AF37]/30 selection:text-[#D4AF37] pt-28 sm:pt-36 min-h-screen">
+    <div className="bg-[#031820] text-neutral-100 selection:bg-[#D4AF37]/30 selection:text-[#D4AF37] py-20 sm:py-32 border-t border-[#062B3A]">
       {/* Header */}
       <section className="px-6 sm:px-8 lg:px-12 pb-12 max-w-5xl mx-auto text-center space-y-4">
         <span className="text-[10px] sm:text-[11px] tracking-[0.45em] text-[#D4AF37] uppercase font-light">
           HIGH JEWELLERY CAMPAIGNS
         </span>
-        <h1 className="font-serif-luxury text-4xl sm:text-6xl md:text-7xl text-white font-light tracking-wide">
+        <h2 className="font-serif-luxury text-4xl sm:text-6xl text-white font-light tracking-wide">
           The Collections
-        </h1>
+        </h2>
         <p className="text-xs sm:text-sm text-neutral-300 font-light max-w-2xl mx-auto tracking-wider">
           Each ReiStella collection represents a distinctive chapter in the architecture of brilliance, celebrating empowered elegance and timeless poise.
         </p>
@@ -62,10 +71,10 @@ export const CollectionsPage: React.FC<CollectionsPageProps> = ({ onNavigate }) 
       </section>
 
       {/* Active Collection Master Showcase */}
-      <section className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 pb-24">
+      <section className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 pb-20">
         <div className="bg-[#020F16] border border-[#062B3A] overflow-hidden">
           {/* Main Campaign Hero Banner */}
-          <div className="relative min-h-[450px] sm:min-h-[550px] lg:min-h-[620px] flex items-end">
+          <div className="relative min-h-[420px] sm:min-h-[500px] lg:min-h-[580px] flex items-end">
             <img
               src={activeCollection.heroImage}
               alt={activeCollection.title}
@@ -81,13 +90,13 @@ export const CollectionsPage: React.FC<CollectionsPageProps> = ({ onNavigate }) 
               <div className="flex items-center space-x-3">
                 <Sparkles className="w-4 h-4 text-[#D4AF37]" />
                 <span className="text-[10px] tracking-[0.4em] text-[#D4AF37] uppercase font-light">
-                  {activeCollection.piecesCount} • {activeCollection.mood}
+                  {activeCollection.mood}
                 </span>
               </div>
 
-              <h2 className="font-serif-luxury text-3xl sm:text-5xl lg:text-6xl text-white font-light tracking-wide leading-tight">
+              <h3 className="font-serif-luxury text-3xl sm:text-5xl text-white font-light tracking-wide leading-tight">
                 {activeCollection.title}
-              </h2>
+              </h3>
 
               <p className="text-xs sm:text-sm tracking-[0.25em] text-[#D4AF37] uppercase font-light">
                 {activeCollection.tagline}
@@ -115,7 +124,7 @@ export const CollectionsPage: React.FC<CollectionsPageProps> = ({ onNavigate }) 
             </div>
           </div>
 
-          {/* Secondary Editorial Highlights & Supporting Imagery */}
+          {/* Secondary Editorial Highlights */}
           {activeCollection.secondaryImage && (
             <div className="p-8 sm:p-12 border-t border-[#062B3A] grid grid-cols-1 md:grid-cols-12 gap-8 items-center bg-[#031820]/60">
               <div className="md:col-span-5 aspect-[4/3] relative overflow-hidden bg-[#020F16] border border-[#062B3A]">
@@ -131,9 +140,9 @@ export const CollectionsPage: React.FC<CollectionsPageProps> = ({ onNavigate }) 
                 <span className="text-[10px] tracking-[0.35em] text-[#D4AF37] uppercase font-light">
                   ATELIER NOTES
                 </span>
-                <h3 className="font-serif-luxury text-2xl sm:text-3xl text-white font-light">
+                <h4 className="font-serif-luxury text-2xl sm:text-3xl text-white font-light">
                   Form, Fluidity & Sovereign Light
-                </h3>
+                </h4>
                 <p className="text-xs sm:text-sm text-neutral-300 font-light leading-relaxed">
                   Sculpted with rigorous attention to proportion and movement, pieces in the {activeCollection.title} collection are engineered to catch light from every angle, delivering hypnotic radiance without unnecessary bulk.
                 </p>
@@ -156,7 +165,7 @@ export const CollectionsPage: React.FC<CollectionsPageProps> = ({ onNavigate }) 
 
       {/* Featured Pieces From This Collection */}
       {relatedPieces.length > 0 && (
-        <section className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 pb-28">
+        <section className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 pb-16">
           <div className="flex items-center justify-between mb-10 pb-4 border-b border-[#062B3A]">
             <div className="space-y-1">
               <span className="text-[10px] tracking-[0.35em] text-[#D4AF37] uppercase font-light">
@@ -175,27 +184,27 @@ export const CollectionsPage: React.FC<CollectionsPageProps> = ({ onNavigate }) 
             {relatedPieces.map((piece) => (
               <div
                 key={piece.id}
-                onClick={() => setSelectedPiece(piece)}
+                onClick={() => handleCardClick(piece)}
                 className="group cursor-pointer bg-[#020F16] border border-[#062B3A] hover:border-[#D4AF37]/50 transition-all duration-300 overflow-hidden"
               >
-                <div className="aspect-[4/3] relative overflow-hidden bg-[#031820]">
+                <div className="relative aspect-[4/3] bg-[#031820] overflow-hidden">
                   <img
                     src={piece.imageUrl}
                     alt={piece.title}
-                    className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700"
+                    className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
                     loading="lazy"
                     referrerPolicy="no-referrer"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-[#020F16] via-transparent to-transparent opacity-60" />
                 </div>
                 <div className="p-6 space-y-2">
+                  <span className="text-[9px] tracking-[0.3em] text-[#D4AF37] uppercase font-light">
+                    {piece.collection}
+                  </span>
                   <h4 className="font-serif-luxury text-xl text-white font-light group-hover:text-[#D4AF37] transition-colors">
                     {piece.title}
                   </h4>
-                  <p className="text-xs text-neutral-400 font-light uppercase tracking-wider">
-                    {piece.subtitle}
-                  </p>
-                  <p className="text-xs text-neutral-300 font-light line-clamp-2 pt-1">
+                  <p className="text-xs text-neutral-400 font-light line-clamp-2">
                     {piece.description}
                   </p>
                 </div>
@@ -205,50 +214,14 @@ export const CollectionsPage: React.FC<CollectionsPageProps> = ({ onNavigate }) 
         </section>
       )}
 
-      {/* All Collections Overview List */}
-      <section className="bg-[#020F16] py-24 border-t border-[#062B3A]">
-        <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
-          <div className="text-center max-w-2xl mx-auto mb-16 space-y-2">
-            <span className="text-[10px] tracking-[0.4em] text-[#D4AF37] uppercase font-light">
-              MAISON COMPENDIUM
-            </span>
-            <h2 className="font-serif-luxury text-3xl sm:text-4xl text-white font-light">
-              All ReiStella Chapters
-            </h2>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {CAMPAIGN_COLLECTIONS.map((col) => (
-              <div
-                key={col.id}
-                onClick={() => {
-                  setActiveCollectionTab(col.id);
-                  window.scrollTo({ top: 180, behavior: 'smooth' });
-                }}
-                className="p-6 bg-[#031820] border border-[#062B3A] hover:border-[#D4AF37]/60 transition-all duration-300 cursor-pointer space-y-3 group"
-              >
-                <div className="flex items-center justify-between text-[10px] text-[#D4AF37] tracking-widest uppercase">
-                  <span>{col.piecesCount}</span>
-                  <ArrowUpRight className="w-3.5 h-3.5 opacity-60 group-hover:opacity-100 group-hover:translate-x-0.5 transition-transform" />
-                </div>
-                <h3 className="font-serif-luxury text-2xl text-white font-light group-hover:text-[#D4AF37] transition-colors">
-                  {col.title}
-                </h3>
-                <p className="text-xs text-neutral-300 font-light leading-relaxed line-clamp-2">
-                  {col.description}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Piece Modal */}
-      <EditorialModal
-        piece={selectedPiece}
-        onClose={() => setSelectedPiece(null)}
-        onNavigateToFind={() => onNavigate('find')}
-      />
+      {/* Internal Piece Lightbox Modal fallback */}
+      {!onSelectPiece && (
+        <EditorialModal
+          piece={internalSelectedPiece}
+          onClose={() => setInternalSelectedPiece(null)}
+          onNavigateToFind={() => onNavigate('find')}
+        />
+      )}
     </div>
   );
 };

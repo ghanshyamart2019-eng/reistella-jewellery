@@ -1,5 +1,6 @@
 import React from 'react';
 import { BRAND_CONFIG, NAVIGATION_ITEMS } from '../data/brandConfig';
+import { ReiStellaLogo } from './ReiStellaLogo';
 import { Instagram, Facebook, MessageCircle, ArrowUpRight } from 'lucide-react';
 
 interface FooterProps {
@@ -9,30 +10,34 @@ interface FooterProps {
 export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
   const handleNavClick = (pageId: string) => {
     onNavigate(pageId);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   return (
-    <footer id="reistella-site-footer" className="bg-[#020F16] border-t border-[#062B3A]/80 text-neutral-300 relative overflow-hidden">
+    <footer id="reistella-site-footer" className="bg-[#020F16] border-t border-[#062B3A] text-neutral-300 relative overflow-hidden">
       {/* Decorative top gold hairline */}
-      <div className="h-[1px] w-full bg-gradient-to-r from-transparent via-[#D4AF37]/30 to-transparent" />
+      <div className="h-[1px] w-full bg-gradient-to-r from-transparent via-[#D4AF37]/35 to-transparent" />
 
-      <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 pt-20 pb-16">
+      <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 pt-16 sm:pt-20 pb-14">
         {/* Brand Presence & Tagline Banner */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 pb-16 border-b border-[#062B3A]">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-8 pb-14 border-b border-[#062B3A]">
           <div className="lg:col-span-6 space-y-4">
-            <div className="flex flex-col">
-              <span className="font-serif-luxury text-3xl sm:text-4xl tracking-[0.3em] text-white font-light">
-                {BRAND_CONFIG.fullName}
-              </span>
-              <span className="text-[11px] tracking-[0.45em] text-[#D4AF37] uppercase font-light mt-1">
-                {BRAND_CONFIG.positioning}
-              </span>
+            {/* Official ReiStella Logo */}
+            <div className="mb-3">
+              <button
+                id="footer-brand-logo-btn"
+                onClick={() => handleNavClick('home')}
+                className="group text-left focus:outline-none flex items-center transition-opacity hover:opacity-95"
+                aria-label="ReiStella Jewellery — Home"
+                title="ReiStella Jewellery — Home"
+              >
+                <ReiStellaLogo size="footer" alt="ReiStella Jewellery" />
+              </button>
             </div>
-            <p className="font-serif-luxury text-xl sm:text-2xl text-neutral-300 italic tracking-wider max-w-lg font-light pt-2">
+            
+            <p className="font-serif-luxury text-xl sm:text-2xl text-neutral-200 italic tracking-wider max-w-lg font-light pt-1">
               "{BRAND_CONFIG.tagline}"
             </p>
-            <p className="text-xs text-neutral-400 tracking-[0.2em] uppercase font-light">
+            <p className="text-xs text-[#D4AF37] tracking-[0.25em] uppercase font-light">
               {BRAND_CONFIG.subTagline}
             </p>
           </div>
@@ -41,10 +46,10 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
           <div className="lg:col-span-6 flex flex-col justify-between items-start lg:items-end space-y-6">
             <div className="space-y-2 text-left lg:text-right">
               <span className="text-[10px] tracking-[0.35em] text-[#D4AF37] uppercase font-medium">
-                Private Advisory & Inquiries
+                Private Advisory & Concierge
               </span>
               <p className="text-xs text-neutral-300 font-light max-w-md">
-                Experience bespoke curation and connect with a dedicated ReiStella ambassador.
+                Connect directly with a dedicated ReiStella ambassador for collection discovery and personal styling.
               </p>
             </div>
 
@@ -54,7 +59,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
                 href={BRAND_CONFIG.urls.whatsapp}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center space-x-2 text-[11px] tracking-[0.2em] uppercase text-white bg-[#062B3A] hover:bg-[#D4AF37] hover:text-[#031820] border border-[#D4AF37]/30 px-6 py-3 transition-all duration-300"
+                className="inline-flex items-center space-x-2 text-[11px] tracking-[0.2em] uppercase text-white bg-[#062B3A] hover:bg-[#D4AF37] hover:text-[#031820] border border-[#D4AF37]/35 px-6 py-3 transition-all duration-300"
               >
                 <MessageCircle className="w-3.5 h-3.5" />
                 <span>WhatsApp Concierge</span>
@@ -69,14 +74,14 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
                 className="inline-flex items-center space-x-2 text-[11px] tracking-[0.2em] uppercase text-neutral-300 hover:text-white border border-neutral-700 hover:border-[#D4AF37]/60 px-5 py-3 transition-all duration-300"
               >
                 <Instagram className="w-3.5 h-3.5" />
-                <span>Instagram Lookbook</span>
+                <span>Instagram Archive</span>
               </a>
             </div>
           </div>
         </div>
 
         {/* Navigation & Channels */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-10 py-12 border-b border-[#062B3A]/60">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-10 py-12 border-b border-[#062B3A]">
           {/* Navigation Links */}
           <div className="space-y-4">
             <h4 className="text-[11px] tracking-[0.35em] text-[#D4AF37] uppercase font-medium">
@@ -135,25 +140,25 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
                 <div className="p-2 bg-[#031820] border border-[#062B3A] group-hover:border-[#D4AF37]/50 transition-colors">
                   <MessageCircle className="w-3.5 h-3.5 text-[#D4AF37]" />
                 </div>
-                <span>WhatsApp Private Advisory</span>
+                <span>WhatsApp Concierge</span>
               </a>
             </div>
           </div>
 
-          {/* The Maison Statement */}
+          {/* Brand Philosophy */}
           <div className="space-y-4">
             <h4 className="text-[11px] tracking-[0.35em] text-[#D4AF37] uppercase font-medium">
-              The Maison
+              The Brand
             </h4>
             <p className="text-xs text-neutral-400 font-light leading-relaxed">
               ReiStella is dedicated to the art of luminary jewellery—where architectural silhouettes meet perpetual elegance. Crafted to empower individuality and let your inner brilliance reign.
             </p>
-            <div className="pt-2">
+            <div className="pt-1">
               <button
                 onClick={() => handleNavClick('about')}
-                className="text-[11px] tracking-[0.25em] text-[#D4AF37] hover:text-white uppercase transition-colors inline-flex items-center space-x-1"
+                className="text-[11px] tracking-[0.2em] text-[#D4AF37] hover:text-white uppercase transition-colors inline-flex items-center space-x-1"
               >
-                <span>Read The Story</span>
+                <span>Discover About ReiStella</span>
                 <span>→</span>
               </button>
             </div>
@@ -163,7 +168,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
         {/* Copyright & Discreet Legal Notice */}
         <div className="pt-8 flex flex-col sm:flex-row items-center justify-between text-[11px] text-neutral-400 font-light tracking-widest gap-4">
           <p>© 2026 {BRAND_CONFIG.fullName}. All Rights Reserved.</p>
-          <div className="flex items-center space-x-6 text-[10px] uppercase">
+          <div className="flex items-center space-x-4 text-[10px] uppercase">
             <span>{BRAND_CONFIG.tagline}</span>
             <span className="text-[#D4AF37]">•</span>
             <span>{BRAND_CONFIG.subTagline}</span>

@@ -5,11 +5,12 @@ import { Sparkles, ArrowUpRight, MessageCircle } from 'lucide-react';
 
 interface NewTrendingPageProps {
   onNavigate: (pageId: string) => void;
+  onSelectPiece?: (piece: JewelleryPiece) => void;
 }
 
-export const NewTrendingPage: React.FC<NewTrendingPageProps> = ({ onNavigate }) => {
+export const NewTrendingPage: React.FC<NewTrendingPageProps> = ({ onNavigate, onSelectPiece }) => {
   const [selectedCategory, setSelectedCategory] = useState<string>('All');
-  const [selectedPiece, setSelectedPiece] = useState<JewelleryPiece | null>(null);
+  const [internalSelectedPiece, setInternalSelectedPiece] = useState<JewelleryPiece | null>(null);
 
   const categories = ['All', 'Signature Pieces', 'Statement Jewellery', 'Festive & Occasion', 'Everyday Luxury'];
 
@@ -17,8 +18,16 @@ export const NewTrendingPage: React.FC<NewTrendingPageProps> = ({ onNavigate }) 
     ? EDITORIAL_PIECES
     : EDITORIAL_PIECES.filter((p) => p.collection === selectedCategory);
 
+  const handleCardClick = (piece: JewelleryPiece) => {
+    if (onSelectPiece) {
+      onSelectPiece(piece);
+    } else {
+      setInternalSelectedPiece(piece);
+    }
+  };
+
   return (
-    <div className="bg-[#031820] text-neutral-100 selection:bg-[#D4AF37]/30 selection:text-[#D4AF37] pt-28 sm:pt-36 min-h-screen">
+    <div className="bg-[#031820] text-neutral-100 selection:bg-[#D4AF37]/30 selection:text-[#D4AF37] py-20 sm:py-32 border-t border-[#062B3A]">
       {/* Header */}
       <section className="px-6 sm:px-8 lg:px-12 pb-12 max-w-5xl mx-auto text-center space-y-4">
         <div className="flex items-center justify-center space-x-3">
@@ -28,9 +37,9 @@ export const NewTrendingPage: React.FC<NewTrendingPageProps> = ({ onNavigate }) 
           </span>
           <Sparkles className="w-4 h-4 text-[#D4AF37]" />
         </div>
-        <h1 className="font-serif-luxury text-4xl sm:text-6xl md:text-7xl text-white font-light tracking-wide">
+        <h2 className="font-serif-luxury text-4xl sm:text-6xl text-white font-light tracking-wide">
           New & Trending
-        </h1>
+        </h2>
         <p className="text-xs sm:text-sm text-neutral-300 font-light max-w-xl mx-auto tracking-wider">
           An editorial curation of our most coveted silhouettes, celebrated for their sculptural magnetism and luminous brilliance.
         </p>
@@ -56,15 +65,15 @@ export const NewTrendingPage: React.FC<NewTrendingPageProps> = ({ onNavigate }) 
         </div>
       </section>
 
-      {/* Editorial Lookbook Layout (Asymmetric, dynamic sizing) */}
-      <section className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 pb-32">
+      {/* Editorial Lookbook Layout */}
+      <section className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 pb-16">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 sm:gap-10">
           {filteredPieces.map((piece, index) => {
             const isHeroCard = index === 0 && selectedCategory === 'All';
             return (
               <div
                 key={piece.id}
-                onClick={() => setSelectedPiece(piece)}
+                onClick={() => handleCardClick(piece)}
                 className={`group cursor-pointer bg-[#020F16] border border-[#062B3A] hover:border-[#D4AF37]/50 transition-all duration-500 flex flex-col justify-between overflow-hidden ${
                   isHeroCard ? 'md:col-span-2 lg:col-span-2' : 'col-span-1'
                 }`}
@@ -133,7 +142,7 @@ export const NewTrendingPage: React.FC<NewTrendingPageProps> = ({ onNavigate }) 
         </div>
 
         {/* Lookbook Concierge Banner */}
-        <div className="mt-20 p-8 sm:p-12 bg-[#020F16] border border-[#062B3A] flex flex-col md:flex-row items-center justify-between gap-8">
+        <div className="mt-16 sm:mt-20 p-8 sm:p-12 bg-[#020F16] border border-[#062B3A] flex flex-col md:flex-row items-center justify-between gap-8">
           <div className="space-y-2 text-center md:text-left">
             <span className="text-[10px] tracking-[0.35em] text-[#D4AF37] uppercase font-light">
               BESPOKE STYLING ADVISORY
@@ -158,12 +167,14 @@ export const NewTrendingPage: React.FC<NewTrendingPageProps> = ({ onNavigate }) 
         </div>
       </section>
 
-      {/* Piece Lightbox Modal */}
-      <EditorialModal
-        piece={selectedPiece}
-        onClose={() => setSelectedPiece(null)}
-        onNavigateToFind={() => onNavigate('find')}
-      />
+      {/* Internal Piece Lightbox Modal fallback */}
+      {!onSelectPiece && (
+        <EditorialModal
+          piece={internalSelectedPiece}
+          onClose={() => setInternalSelectedPiece(null)}
+          onNavigateToFind={() => onNavigate('find')}
+        />
+      )}
     </div>
   );
 };

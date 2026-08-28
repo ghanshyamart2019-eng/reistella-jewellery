@@ -1,3 +1,8 @@
+/**
+ * @license
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
 export interface NavItem {
   id: string;
   label: string;
@@ -24,16 +29,14 @@ export interface CollectionCampaign {
   description: string;
   heroImage: string;
   secondaryImage?: string;
-  piecesCount: string;
   mood: string;
 }
 
-export interface PartnerLocation {
+export interface PartnerCity {
   city: string;
-  country: string;
-  district: string;
-  status: 'Flagship Partner' | 'Authorized Stockist' | 'Private Salon';
-  contactType: string;
+  displayName: string;
+  region: string;
+  description: string;
 }
 
 export const BRAND_CONFIG = {
@@ -43,29 +46,28 @@ export const BRAND_CONFIG = {
   subTagline: 'THE STORY CONTINUES',
   positioning: 'PREMIUM FASHION JEWELLERY',
   
-  // URLs & Socials
+  // URLs & Official Social Connections
   urls: {
     instagram: 'https://www.instagram.com/reistella_official/',
-    facebook: 'https://facebook.com/reistellajewellery', // Placeholder configurable
-    whatsapp: 'https://wa.me/?text=Hello%20ReiStella%20Concierge%2C%20I%20would%20like%20to%20inquire%20about%20discovering%20the%20collection.',
+    facebook: 'https://facebook.com/reistellajewellery',
+    whatsapp: 'https://wa.me/?text=Hello%20ReiStella%20Concierge%2C%20I%20would%20like%20to%20connect%20with%20the%20maison%20and%20discover%20the%20collection.',
     contactEmail: 'concierge@reistella.com',
-    logoUrl: null, // [LOGO_URL_WILL_BE_ADDED]
   },
 
-  // Primary Campaign Images
+  // Campaign & High-Editorial Imagery
   images: {
     // Official ReiStella Hero campaign piece provided by user
     heroReference: 'https://reistella.com/wp-content/uploads/2026/08/ChatGPT-Image-Aug-25-2026-10_36_30-PM-1024x576.png',
     
-    // Supporting high-editorial jewellery photography (luxury dark atmosphere, cinematic lighting)
-    editorial1: 'https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?q=80&w=1600&auto=format&fit=crop', // Luxury necklace on dark background
+    // High-fashion jewellery editorial imagery (cinematic dark atmosphere, crisp luxury lighting)
+    editorial1: 'https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?q=80&w=1600&auto=format&fit=crop', // Luxury necklace on deep navy background
     editorial2: 'https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?q=80&w=1600&auto=format&fit=crop', // Fine jewellery earrings
-    editorial3: 'https://images.unsplash.com/photo-1605100804763-247f67b3557e?q=80&w=1600&auto=format&fit=crop', // High brilliance diamond ring
+    editorial3: 'https://images.unsplash.com/photo-1605100804763-247f67b3557e?q=80&w=1600&auto=format&fit=crop', // High brilliance solitaire ring
     editorial4: 'https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?q=80&w=1600&auto=format&fit=crop', // Editorial jewellery model portrait
     editorial5: 'https://images.unsplash.com/photo-1611591475152-4735d387e917?q=80&w=1600&auto=format&fit=crop', // Luxury gold bracelet
-    editorial6: 'https://images.unsplash.com/photo-1600003014755-ba31aa59c4b6?q=80&w=1600&auto=format&fit=crop', // Dark emerald and diamond setting
-    editorial7: 'https://images.unsplash.com/photo-1603561591411-07134e71a2a9?q=80&w=1600&auto=format&fit=crop', // High jewellery editorial
-    editorial8: 'https://images.unsplash.com/photo-1506630448388-4e683c67ddb0?q=80&w=1600&auto=format&fit=crop', // Atelier craftsmanship mood
+    editorial6: 'https://images.unsplash.com/photo-1600003014755-ba31aa59c4b6?q=80&w=1600&auto=format&fit=crop', // Deep emerald and diamond setting
+    editorial7: 'https://images.unsplash.com/photo-1603561591411-07134e71a2a9?q=80&w=1600&auto=format&fit=crop', // High jewellery campaign shot
+    editorial8: 'https://images.unsplash.com/photo-1506630448388-4e683c67ddb0?q=80&w=1600&auto=format&fit=crop', // Atelier mood
     editorial9: 'https://images.unsplash.com/photo-1588444837495-c6cfeb53f32d?q=80&w=1600&auto=format&fit=crop', // Fine necklace closeup
     editorial10: 'https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?q=80&w=1600&auto=format&fit=crop', // Editorial portrait in dark tone
   }
@@ -83,15 +85,15 @@ export const NAVIGATION_ITEMS: NavItem[] = [
 export const EDITORIAL_PIECES: JewelleryPiece[] = [
   {
     id: 'sovereign-reign-necklace',
-    title: 'The Sovereign Reign Necklace',
+    title: 'The Sovereign Reign',
     collection: 'Signature Pieces',
-    subtitle: 'High-Jewellery Luminary Collar',
+    subtitle: 'High-Jewellery Campaign Piece',
     description: 'An architectural composition of light and geometry designed to crown the neckline with sovereign radiance.',
     imageUrl: BRAND_CONFIG.images.heroReference,
     aspectRatio: '16/9',
-    tags: ['Hero Campaign', 'Signature', 'Evening'],
+    tags: ['Hero Campaign', 'Signature'],
     featured: true,
-    editorialNote: 'As featured in the 2026 Reign Campaign.'
+    editorialNote: 'Official ReiStella campaign centerpiece.'
   },
   {
     id: 'etoile-nocturne-earrings',
@@ -101,30 +103,30 @@ export const EDITORIAL_PIECES: JewelleryPiece[] = [
     description: 'Fluid movement captured in faceted brilliance, evoking starlight against the midnight sky.',
     imageUrl: BRAND_CONFIG.images.editorial2,
     aspectRatio: '4/5',
-    tags: ['Evening', 'Occasion'],
-    editorialNote: 'Sculpted for effortless kinetic brilliance.'
+    tags: ['Occasion', 'Radiance'],
+    editorialNote: 'Sculpted for kinetic brilliance and poise.'
   },
   {
     id: 'solaris-crown-ring',
-    title: 'Solaris Crown Solitaire',
+    title: 'Solaris Crown Ring',
     collection: 'Statement Jewellery',
     subtitle: 'Sculpted Silhouette & Luminary Fire',
     description: 'A contemporary emblem of personal authority and modern luxury, set in commanding proportions.',
     imageUrl: BRAND_CONFIG.images.editorial3,
     aspectRatio: '1/1',
-    tags: ['Statement', 'Bridal-Inspired'],
-    editorialNote: 'Maximum light refraction with architectural claw mounts.'
+    tags: ['Statement', 'Sculptural'],
+    editorialNote: 'Maximum light refraction with architectural mounts.'
   },
   {
     id: 'celestial-cuff',
     title: 'Aura Pavé Armature',
     collection: 'Everyday Luxury',
-    subtitle: 'Ergonomic Gold & Endless Micro-Pavé',
-    description: 'Designed to be lived in. A seamless ribbon of light contouring the wrist with refined discipline.',
+    subtitle: 'Ergonomic Gold & Seamless Pavé',
+    description: 'A seamless ribbon of light contouring the wrist with refined discipline and understated power.',
     imageUrl: BRAND_CONFIG.images.editorial5,
     aspectRatio: '4/5',
     tags: ['Everyday Luxury', 'Signature'],
-    editorialNote: 'Precision hinged clasp with seamless closure.'
+    editorialNote: 'Precision closure with seamless contouring.'
   },
   {
     id: 'velvet-emerald-pendant',
@@ -135,7 +137,7 @@ export const EDITORIAL_PIECES: JewelleryPiece[] = [
     imageUrl: BRAND_CONFIG.images.editorial6,
     aspectRatio: '4/5',
     tags: ['Festive', 'Occasion'],
-    editorialNote: 'Inspired by royal jewel archives reimagined for the modern era.'
+    editorialNote: 'Timeless chromatic depth and radiant halo.'
   },
   {
     id: 'astra-choker',
@@ -158,7 +160,6 @@ export const CAMPAIGN_COLLECTIONS: CollectionCampaign[] = [
     description: 'Bespoke silhouettes conceived to turn any room into an intimate stage. Sculptural, luminous, unforgettable.',
     heroImage: BRAND_CONFIG.images.heroReference,
     secondaryImage: BRAND_CONFIG.images.editorial7,
-    piecesCount: '12 Masterpieces',
     mood: 'Sovereign • Regal • Unapologetic'
   },
   {
@@ -168,7 +169,6 @@ export const CAMPAIGN_COLLECTIONS: CollectionCampaign[] = [
     description: 'Pure lines and effortless brilliance that accompany your daily triumphs with subtle grandeur.',
     heroImage: BRAND_CONFIG.images.editorial5,
     secondaryImage: BRAND_CONFIG.images.editorial4,
-    piecesCount: '16 Editions',
     mood: 'Effortless • Tactile • Modern'
   },
   {
@@ -178,7 +178,6 @@ export const CAMPAIGN_COLLECTIONS: CollectionCampaign[] = [
     description: 'Dynamic light-play and dramatic proportions crafted to capture the enchantment of unforgettable evenings.',
     heroImage: BRAND_CONFIG.images.editorial2,
     secondaryImage: BRAND_CONFIG.images.editorial6,
-    piecesCount: '14 Editions',
     mood: 'Hypnotic • Dramatic • Celebratory'
   },
   {
@@ -188,7 +187,6 @@ export const CAMPAIGN_COLLECTIONS: CollectionCampaign[] = [
     description: 'Luminescent creations honoring devotion and personal elegance for the most profound celebrations of love.',
     heroImage: BRAND_CONFIG.images.editorial3,
     secondaryImage: BRAND_CONFIG.images.editorial9,
-    piecesCount: '10 Editions',
     mood: 'Poetic • Timeless • Reverent'
   },
   {
@@ -198,45 +196,28 @@ export const CAMPAIGN_COLLECTIONS: CollectionCampaign[] = [
     description: 'The crowning triumphs that define our visual vocabulary. Where modern poise meets eternal brilliance.',
     heroImage: BRAND_CONFIG.images.editorial1,
     secondaryImage: BRAND_CONFIG.images.editorial8,
-    piecesCount: '8 Editions',
     mood: 'Maison Icons • Architectural • Pure'
   }
 ];
 
-export const PARTNER_LOCATIONS: PartnerLocation[] = [
+// Official brand-supplied partner cities ONLY
+export const PARTNER_CITIES: PartnerCity[] = [
   {
-    city: 'London',
-    country: 'United Kingdom',
-    district: 'Mayfair & Bond Street District',
-    status: 'Private Salon',
-    contactType: 'By VIP Concierge Appointment'
+    city: 'Ahmedabad',
+    displayName: 'Ahmedabad',
+    region: 'Gujarat, India',
+    description: 'Connect with a ReiStella partner in Ahmedabad for private collection discovery and consultation.'
   },
   {
-    city: 'Dubai',
-    country: 'United Arab Emirates',
-    district: 'Downtown & DIFC Luxury Arcades',
-    status: 'Flagship Partner',
-    contactType: 'Partner Boutique Showroom'
+    city: 'Vadodara',
+    displayName: 'Vadodara / Baroda',
+    region: 'Gujarat, India',
+    description: 'Connect with a ReiStella partner in Vadodara for curated showcase viewings and advisory.'
   },
   {
-    city: 'Singapore',
-    country: 'Singapore',
-    district: 'Orchard & Marina Bay Concierge',
-    status: 'Authorized Stockist',
-    contactType: 'Curated Luxury Partner'
-  },
-  {
-    city: 'Mumbai',
-    country: 'India',
-    district: 'Colaba & Bandra Luxury Quarter',
-    status: 'Flagship Partner',
-    contactType: 'Official Partner Showcase'
-  },
-  {
-    city: 'New York',
-    country: 'United States',
-    district: 'Madison Avenue & Upper East Side',
-    status: 'Private Salon',
-    contactType: 'VIP Trunk Show & Private Advisory'
+    city: 'Rajkot',
+    displayName: 'Rajkot',
+    region: 'Gujarat, India',
+    description: 'Connect with a ReiStella partner in Rajkot for styling guidance and campaign pieces.'
   }
 ];
