@@ -9,10 +9,7 @@ import {
   Sparkles, 
   Maximize2, 
   MessageCircle, 
-  ArrowUpRight, 
   Eye, 
-  Layers,
-  Flame,
   CheckCircle2
 } from 'lucide-react';
 import { BRAND_CONFIG, JewelleryPiece } from '../data/brandConfig';
@@ -23,37 +20,102 @@ interface RoyalSuiteShowcaseProps {
 }
 
 export const RoyalSuiteShowcase: React.FC<RoyalSuiteShowcaseProps> = ({ 
-  onSelectPiece,
-  onNavigateToFind 
+  onSelectPiece: _onSelectPiece,
+  onNavigateToFind: _onNavigateToFind 
 }) => {
   const [activeView, setActiveView] = useState<'video' | 'still'>('video');
   const [isPlaying, setIsPlaying] = useState<boolean>(true);
   const [isMuted, setIsMuted] = useState<boolean>(true);
+  const [currentTime, setCurrentTime] = useState<number>(0);
+  const [duration, setDuration] = useState<number>(0);
   const [videoProgress, setVideoProgress] = useState<number>(0);
   const [activeHotspot, setActiveHotspot] = useState<string | null>('necklace');
   const [ambientSoundActive, setAmbientSoundActive] = useState<boolean>(false);
-  const [zoomLevel, setZoomLevel] = useState<number>(1);
+  const videoRef = useRef<HTMLVideoElement | null>(null);
+  const containerRef = useRef<HTMLDivElement | null>(null);
   const audioContextRef = useRef<AudioContext | null>(null);
 
-  // Simulated video playback timer & loop
+  // Synchronize video element play/pause state
   useEffect(() => {
-    let interval: NodeJS.Timeout;
-    if (isPlaying && activeView === 'video') {
-      interval = setInterval(() => {
-        setVideoProgress((prev) => {
-          if (prev >= 100) return 0;
-          return prev + 1.2;
-        });
-      }, 100);
+    if (activeView === 'video' && videoRef.current) {
+      if (isPlaying) {
+        const playPromise = videoRef.current.play();
+        if (playPromise !== undefined) {
+          playPromise.catch(() => {
+            // Autoplay with sound might be blocked; fallback to muted autoplay
+            if (videoRef.current) {
+              videoRef.current.muted = true;
+              setIsMuted(true);
+              videoRef.current.play().catch(() => setIsPlaying(false));
+            }
+          });
+        }
+      } else {
+        videoRef.current.pause();
+      }
     }
-    return () => clearInterval(interval);
   }, [isPlaying, activeView]);
+
+  // Handle time update from real video
+  const handleTimeUpdate = () => {
+    if (videoRef.current) {
+      const current = videoRef.current.currentTime;
+      const dur = videoRef.current.duration || 1;
+      setCurrentTime(current);
+      setDuration(dur);
+      setVideoProgress((current / dur) * 100);
+    }
+  };
+
+  const handleLoadedMetadata = () => {
+    if (videoRef.current) {
+      setDuration(videoRef.current.duration || 0);
+    }
+  };
+
+  const handleSeek = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (videoRef.current && duration > 0) {
+      const rect = e.currentTarget.getBoundingClientRect();
+      const clickX = e.clientX - rect.left;
+      const width = rect.width;
+      const newTime = (clickX / width) * duration;
+      videoRef.current.currentTime = newTime;
+      setCurrentTime(newTime);
+      setVideoProgress((newTime / duration) * 100);
+    }
+  };
+
+  const handleRestart = () => {
+    if (videoRef.current) {
+      videoRef.current.currentTime = 0;
+      setCurrentTime(0);
+      setVideoProgress(0);
+      videoRef.current.play().catch(() => {});
+      setIsPlaying(true);
+    }
+  };
+
+  const toggleMute = () => {
+    if (videoRef.current) {
+      const newMuted = !isMuted;
+      videoRef.current.muted = newMuted;
+      setIsMuted(newMuted);
+    }
+  };
+
+  const toggleFullscreen = () => {
+    if (!containerRef.current) return;
+    if (!document.fullscreenElement) {
+      containerRef.current.requestFullscreen().catch(() => {});
+    } else {
+      document.exitFullscreen().catch(() => {});
+    }
+  };
 
   // Gentle ambient chime sound synthesizer for luxury atmosphere
   const toggleAmbientSound = () => {
     if (ambientSoundActive) {
       setAmbientSoundActive(false);
-      setIsMuted(true);
       return;
     }
 
@@ -85,11 +147,17 @@ export const RoyalSuiteShowcase: React.FC<RoyalSuiteShowcaseProps> = ({
         });
 
         setAmbientSoundActive(true);
-        setIsMuted(false);
       }
     } catch {
       setAmbientSoundActive(false);
     }
+  };
+
+  const formatTime = (secs: number) => {
+    if (isNaN(secs)) return '00:00';
+    const minutes = Math.floor(secs / 60);
+    const seconds = Math.floor(secs % 60);
+    return `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
   };
 
   const suiteDetails = [
@@ -138,7 +206,7 @@ export const RoyalSuiteShowcase: React.FC<RoyalSuiteShowcaseProps> = ({
           <div className="inline-flex items-center space-x-2 bg-[#031820] border border-[#D4AF37]/40 px-4 py-1.5 backdrop-blur-md">
             <Sparkles className="w-3.5 h-3.5 text-[#D4AF37] animate-pulse" />
             <span className="text-[10px] sm:text-[11px] tracking-[0.35em] text-[#D4AF37] uppercase font-light">
-              HIGH JEWELLERY CAMPAIGN & CINEMATIC FILM
+              THE CREATION IN MOTION & HIGH JEWELLERY SUITE
             </span>
           </div>
 
@@ -147,7 +215,7 @@ export const RoyalSuiteShowcase: React.FC<RoyalSuiteShowcaseProps> = ({
           </h2>
 
           <p className="text-sm sm:text-base text-neutral-300 font-light leading-relaxed max-w-2xl mx-auto tracking-wider">
-            Experience our crowning high-jewellery creation in motion and still life. A symphony of fiery canary yellow sapphires and cascading brilliant-cut diamonds.
+            A statement of brilliance, movement and modern regal elegance. Experience our crowning high-jewellery creation in motion and still life.
           </p>
 
           {/* Mode Switcher Buttons */}
@@ -182,282 +250,126 @@ export const RoyalSuiteShowcase: React.FC<RoyalSuiteShowcaseProps> = ({
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
           
           {/* Left / Top: Interactive Player & Showcase Stage */}
-          <div className="lg:col-span-8 bg-[#031820] border border-[#062B3A] shadow-2xl relative overflow-hidden group">
+          <div 
+            ref={containerRef}
+            className="lg:col-span-8 bg-[#031820] border border-[#062B3A] shadow-2xl relative overflow-hidden group"
+          >
             
-            {/* View 1: Motion Campaign Film Player */}
+            {/* View 1: Real Motion Campaign Film Player */}
             {activeView === 'video' ? (
               <div className="relative aspect-[16/9] w-full bg-[#010B10] flex items-center justify-center overflow-hidden">
-                {/* Simulated Campaign Video Scene with Muse in Royal Red Sari and Yellow Sapphire Suite */}
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <svg 
-                    viewBox="0 0 1280 720" 
-                    className="w-full h-full object-cover select-none"
-                  >
-                    <defs>
-                      {/* Deep Navy Velvet Drape Background */}
-                      <linearGradient id="bgVelvet" x1="0%" y1="0%" x2="100%" y2="100%">
-                        <stop offset="0%" stopColor="#021018" />
-                        <stop offset="40%" stopColor="#0B2332" />
-                        <stop offset="70%" stopColor="#041520" />
-                        <stop offset="100%" stopColor="#01080D" />
-                      </linearGradient>
-
-                      {/* Velvet Fabric Folds */}
-                      <linearGradient id="foldLight" x1="0%" y1="0%" x2="100%" y2="0%">
-                        <stop offset="0%" stopColor="#071E2C" stopOpacity="0.8" />
-                        <stop offset="50%" stopColor="#123B52" stopOpacity="0.4" />
-                        <stop offset="100%" stopColor="#04111A" stopOpacity="0.9" />
-                      </linearGradient>
-
-                      {/* Red Sari Silk & Zari */}
-                      <linearGradient id="sariRed" x1="0%" y1="0%" x2="100%" y2="100%">
-                        <stop offset="0%" stopColor="#871A24" />
-                        <stop offset="50%" stopColor="#680E18" />
-                        <stop offset="100%" stopColor="#46060D" />
-                      </linearGradient>
-
-                      <linearGradient id="goldZari" x1="0%" y1="0%" x2="100%" y2="0%">
-                        <stop offset="0%" stopColor="#D4AF37" />
-                        <stop offset="50%" stopColor="#FFF2B2" />
-                        <stop offset="100%" stopColor="#AA820A" />
-                      </linearGradient>
-
-                      {/* Yellow Sapphire Luminescence */}
-                      <radialGradient id="sapphireCanary" cx="50%" cy="50%" r="50%">
-                        <stop offset="0%" stopColor="#FFF4A3" />
-                        <stop offset="40%" stopColor="#FFD700" />
-                        <stop offset="85%" stopColor="#E6A800" />
-                        <stop offset="100%" stopColor="#9E6E00" />
-                      </radialGradient>
-
-                      {/* Diamond Shimmer */}
-                      <radialGradient id="diamondWhite" cx="50%" cy="50%" r="50%">
-                        <stop offset="0%" stopColor="#FFFFFF" />
-                        <stop offset="50%" stopColor="#E2F1FF" />
-                        <stop offset="100%" stopColor="#A8C8E6" />
-                      </radialGradient>
-                    </defs>
-
-                    {/* Background Backdrop */}
-                    <rect width="1280" height="720" fill="url(#bgVelvet)" />
-                    
-                    {/* Draped Curtains / Fabric texture */}
-                    <path d="M 0 0 Q 300 200 150 720 L 0 720 Z" fill="url(#foldLight)" />
-                    <path d="M 1280 0 Q 980 250 1150 720 L 1280 720 Z" fill="url(#foldLight)" />
-                    
-                    {/* Model Portrait Silhouette */}
-                    {/* Shoulders & Sari Drape */}
-                    <path d="M 380 720 C 420 540, 520 480, 640 480 C 760 480, 860 540, 900 720 Z" fill="url(#sariRed)" />
-                    {/* Golden Zari Border on Saree */}
-                    <path d="M 390 720 Q 560 540 680 720" stroke="url(#goldZari)" strokeWidth="32" fill="none" strokeDasharray="6 3" />
-                    <path d="M 380 720 Q 560 540 680 720" stroke="#FFF" strokeWidth="2" fill="none" opacity="0.6" />
-
-                    {/* Neck and Décolletage */}
-                    <path d="M 570 330 C 570 420, 590 470, 640 470 C 690 470, 710 420, 710 330 Z" fill="#C99478" />
-                    {/* Collarbone shadows */}
-                    <path d="M 590 440 Q 640 460 690 440" stroke="#9C6B52" strokeWidth="3" fill="none" opacity="0.4" />
-
-                    {/* Head & Facial Profile */}
-                    <ellipse cx="640" cy="270" rx="90" ry="115" fill="#D49E82" />
-                    {/* Hair Updo */}
-                    <path d="M 540 250 C 530 160, 750 160, 740 250 C 750 200, 730 130, 640 130 C 550 130, 530 200, 540 250 Z" fill="#1A110E" />
-                    <ellipse cx="640" cy="160" rx="60" ry="40" fill="#140D0B" />
-
-                    {/* Facial Features */}
-                    {/* Eyebrows */}
-                    <path d="M 585 240 Q 610 232 625 242" stroke="#2B1810" strokeWidth="3.5" fill="none" strokeLinecap="round" />
-                    <path d="M 655 242 Q 670 232 695 240" stroke="#2B1810" strokeWidth="3.5" fill="none" strokeLinecap="round" />
-                    {/* Almond Eyes with Eyeliner */}
-                    <path d="M 590 255 Q 610 248 625 257" fill="#1A0D08" />
-                    <path d="M 655 257 Q 670 248 690 255" fill="#1A0D08" />
-                    <circle cx="610" cy="254" r="3" fill="#FFF" opacity="0.9" />
-                    <circle cx="670" cy="254" r="3" fill="#FFF" opacity="0.9" />
-                    {/* Sculpted Nose */}
-                    <path d="M 640 248 L 637 285 Q 640 292 645 288" stroke="#AA765C" strokeWidth="2.5" fill="none" />
-                    {/* Lips */}
-                    <path d="M 622 315 Q 640 310 658 315 Q 640 330 622 315" fill="#B85252" />
-
-                    {/* ======================================================== */}
-                    {/* THE ROYAL JEWELLERY SUITE ON MODEL                      */}
-                    {/* ======================================================== */}
-
-                    {/* 1. Grand Yellow Sapphire & Diamond Chandelier Earrings */}
-                    {/* Left Earring */}
-                    <g transform="translate(535, 275) scale(0.65)">
-                      <circle cx="0" cy="0" r="10" fill="url(#sapphireCanary)" stroke="#FFF" strokeWidth="1.5" />
-                      <ellipse cx="0" cy="24" rx="14" ry="18" fill="url(#sapphireCanary)" stroke="#FFF" strokeWidth="2" />
-                      {/* Chandelier dangles */}
-                      <path d="M -15 45 L 0 65 L 15 45" stroke="#FFF" strokeWidth="2" fill="none" />
-                      <circle cx="-15" cy="48" r="4" fill="url(#sapphireCanary)" />
-                      <circle cx="0" cy="68" r="6" fill="url(#sapphireCanary)" />
-                      <circle cx="15" cy="48" r="4" fill="url(#sapphireCanary)" />
-                    </g>
-
-                    {/* Right Earring */}
-                    <g transform="translate(745, 275) scale(0.65)">
-                      <circle cx="0" cy="0" r="10" fill="url(#sapphireCanary)" stroke="#FFF" strokeWidth="1.5" />
-                      <ellipse cx="0" cy="24" rx="14" ry="18" fill="url(#sapphireCanary)" stroke="#FFF" strokeWidth="2" />
-                      {/* Chandelier dangles */}
-                      <path d="M -15 45 L 0 65 L 15 45" stroke="#FFF" strokeWidth="2" fill="none" />
-                      <circle cx="-15" cy="48" r="4" fill="url(#sapphireCanary)" />
-                      <circle cx="0" cy="68" r="6" fill="url(#sapphireCanary)" />
-                      <circle cx="15" cy="48" r="4" fill="url(#sapphireCanary)" />
-                    </g>
-
-                    {/* 2. THE GRAND SOVEREIGN ROYAL NECKLACE */}
-                    <g id="svg-grand-necklace">
-                      {/* Base Collar Arc with Diamonds */}
-                      <path d="M 565 410 C 585 475, 695 475, 715 410" stroke="url(#goldZari)" strokeWidth="12" fill="none" strokeLinecap="round" />
-                      <path d="M 565 410 C 585 475, 695 475, 715 410" stroke="#FFF" strokeWidth="4" strokeDasharray="3 4" fill="none" />
-
-                      {/* Cascading Chandelier Drops on Neckline */}
-                      {/* Centerpiece Rosette Cluster */}
-                      <g transform="translate(640, 470)">
-                        {/* Center Yellow Sapphire Blossom */}
-                        <circle cx="0" cy="0" r="12" fill="url(#sapphireCanary)" stroke="#FFF" strokeWidth="2" />
-                        {/* 8 Surrounding Diamond Petals */}
-                        {[0, 45, 90, 135, 180, 225, 270, 315].map((angle, i) => {
-                          const rad = (angle * Math.PI) / 180;
-                          return (
-                            <ellipse 
-                              key={i}
-                              cx={Math.cos(rad) * 18} 
-                              cy={Math.sin(rad) * 18} 
-                              rx="5" 
-                              ry="8" 
-                              transform={`rotate(${angle} ${Math.cos(rad) * 18} ${Math.sin(rad) * 18})`}
-                              fill="url(#diamondWhite)" 
-                              stroke="#D4AF37" 
-                              strokeWidth="1"
-                            />
-                          );
-                        })}
-
-                        {/* Hanging Grand Pear Chandelier */}
-                        <path d="M 0 25 L 0 55" stroke="url(#goldZari)" strokeWidth="3" />
-                        <ellipse cx="0" cy="65" rx="10" ry="16" fill="url(#sapphireCanary)" stroke="#FFF" strokeWidth="2" />
-                        <circle cx="-16" cy="50" r="5" fill="url(#diamondWhite)" />
-                        <circle cx="16" cy="50" r="5" fill="url(#diamondWhite)" />
-                      </g>
-
-                      {/* Left Lateral Clusters */}
-                      <g transform="translate(605, 458) scale(0.85)">
-                        <circle cx="0" cy="0" r="9" fill="url(#sapphireCanary)" stroke="#FFF" strokeWidth="1.5" />
-                        <path d="M 0 15 L 0 35" stroke="url(#goldZari)" strokeWidth="2.5" />
-                        <ellipse cx="0" cy="42" rx="7" ry="11" fill="url(#sapphireCanary)" stroke="#FFF" strokeWidth="1.5" />
-                      </g>
-                      <g transform="translate(575, 435) scale(0.7)">
-                        <circle cx="0" cy="0" r="8" fill="url(#sapphireCanary)" stroke="#FFF" strokeWidth="1.5" />
-                        <ellipse cx="0" cy="28" rx="6" ry="9" fill="url(#sapphireCanary)" stroke="#FFF" strokeWidth="1.5" />
-                      </g>
-
-                      {/* Right Lateral Clusters */}
-                      <g transform="translate(675, 458) scale(0.85)">
-                        <circle cx="0" cy="0" r="9" fill="url(#sapphireCanary)" stroke="#FFF" strokeWidth="1.5" />
-                        <path d="M 0 15 L 0 35" stroke="url(#goldZari)" strokeWidth="2.5" />
-                        <ellipse cx="0" cy="42" rx="7" ry="11" fill="url(#sapphireCanary)" stroke="#FFF" strokeWidth="1.5" />
-                      </g>
-                      <g transform="translate(705, 435) scale(0.7)">
-                        <circle cx="0" cy="0" r="8" fill="url(#sapphireCanary)" stroke="#FFF" strokeWidth="1.5" />
-                        <ellipse cx="0" cy="28" rx="6" ry="9" fill="url(#sapphireCanary)" stroke="#FFF" strokeWidth="1.5" />
-                      </g>
-                    </g>
-
-                    {/* 3. Hand with Solaris Bloom Cocktail Ring */}
-                    <g transform="translate(780, 520)">
-                      {/* Gracefully posed hand touching saree */}
-                      <path d="M 0 40 Q 20 0 50 10 Q 70 30 60 70 Q 30 90 0 80 Z" fill="#D49E82" opacity="0.95" />
-                      {/* Cocktail Ring on Index Finger */}
-                      <circle cx="35" cy="25" r="10" fill="url(#sapphireCanary)" stroke="#FFF" strokeWidth="2" />
-                      {[0, 60, 120, 180, 240, 300].map((angle, i) => {
-                        const rad = (angle * Math.PI) / 180;
-                        return (
-                          <circle 
-                            key={i}
-                            cx={35 + Math.cos(rad) * 14} 
-                            cy={25 + Math.sin(rad) * 14} 
-                            r="3.5" 
-                            fill="url(#diamondWhite)" 
-                            stroke="#D4AF37" 
-                            strokeWidth="0.8" 
-                          />
-                        );
-                      })}
-                    </g>
-
-                    {/* Animated Light Shimmer Flare moving across necklace */}
-                    {isPlaying && (
-                      <g transform={`translate(${550 + (videoProgress * 2.2)}, 440)`}>
-                        <circle cx="0" cy="0" r="8" fill="#FFF" opacity="0.8" />
-                        <path d="M -25 0 L 25 0 M 0 -25 L 0 25" stroke="#FFF" strokeWidth="2" opacity="0.9" />
-                        <path d="M -15 -15 L 15 15 M -15 15 L 15 -15" stroke="#FFF2A3" strokeWidth="1.5" opacity="0.7" />
-                      </g>
-                    )}
-                  </svg>
-                </div>
+                {/* Official ReiStella Product Wearing Video */}
+                <video
+                  ref={videoRef}
+                  src="/THE FINAL.mp4"
+                  poster="/3.jpg"
+                  playsInline
+                  autoPlay
+                  loop
+                  muted={isMuted}
+                  preload="metadata"
+                  onTimeUpdate={handleTimeUpdate}
+                  onLoadedMetadata={handleLoadedMetadata}
+                  onPlay={() => setIsPlaying(true)}
+                  onPause={() => setIsPlaying(false)}
+                  className="w-full h-full object-cover object-center select-none"
+                >
+                  <source src="/THE FINAL.mp4" type="video/mp4" />
+                  <source src="/THE FINAL.MP4" type="video/mp4" />
+                  <source src="/THE%20FINAL.mp4" type="video/mp4" />
+                  <source src="/the-final.mp4" type="video/mp4" />
+                </video>
 
                 {/* Film Overlay Vignette */}
-                <div className="absolute inset-0 bg-gradient-to-t from-[#020F16] via-transparent to-transparent opacity-80 pointer-events-none" />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#020F16]/90 via-transparent to-[#020F16]/30 pointer-events-none" />
 
-                {/* Film Stamp */}
-                <div className="absolute top-4 left-4 flex items-center space-x-2 bg-[#020F16]/85 border border-[#D4AF37]/40 px-3 py-1.5 backdrop-blur-md">
+                {/* Film Badge */}
+                <div className="absolute top-4 left-4 flex items-center space-x-2 bg-[#020F16]/85 border border-[#D4AF37]/40 px-3 py-1.5 backdrop-blur-md z-10 pointer-events-none">
                   <div className="w-2 h-2 rounded-full bg-red-500 animate-ping" />
                   <span className="text-[10px] tracking-[0.25em] text-[#D4AF37] uppercase font-light">
-                    REISTELLA CINEMATIC CAMPAIGN • 4K
+                    REISTELLA CAMPAIGN FILM • 4K
                   </span>
                 </div>
 
-                {/* Center Big Play/Pause Button when paused */}
+                {/* Center Big Play/Pause Button overlay */}
                 {!isPlaying && (
                   <button
                     onClick={() => setIsPlaying(true)}
-                    className="absolute inset-0 m-auto w-18 h-18 rounded-full bg-[#D4AF37] text-[#031820] flex items-center justify-center shadow-[0_0_40px_rgba(212,175,55,0.8)] transition-transform duration-300 hover:scale-110 focus:outline-none"
-                    aria-label="Play Film"
+                    className="absolute inset-0 m-auto w-18 h-18 rounded-full bg-[#D4AF37] text-[#031820] flex items-center justify-center shadow-[0_0_40px_rgba(212,175,55,0.8)] transition-transform duration-300 hover:scale-110 focus:outline-none z-20 cursor-pointer"
+                    aria-label="Play Campaign Film"
                   >
                     <Play className="w-8 h-8 fill-current ml-1" />
                   </button>
                 )}
 
                 {/* Video Playback Bar Controls */}
-                <div className="absolute bottom-4 left-4 right-4 bg-[#020F16]/90 border border-[#062B3A] p-3 backdrop-blur-md flex items-center justify-between gap-4">
-                  <div className="flex items-center space-x-3">
+                <div className="absolute bottom-4 left-4 right-4 bg-[#020F16]/95 border border-[#062B3A] p-3 backdrop-blur-md flex items-center justify-between gap-3 sm:gap-4 z-20">
+                  <div className="flex items-center space-x-2 sm:space-x-3">
                     <button
                       onClick={() => setIsPlaying(!isPlaying)}
                       className="text-[#D4AF37] hover:text-white p-1.5 focus:outline-none transition-colors"
                       title={isPlaying ? "Pause" : "Play"}
+                      aria-label={isPlaying ? "Pause" : "Play"}
                     >
                       {isPlaying ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4 fill-current" />}
                     </button>
 
                     <button
-                      onClick={() => setVideoProgress(0)}
+                      onClick={handleRestart}
                       className="text-neutral-400 hover:text-white p-1.5 focus:outline-none transition-colors"
-                      title="Replay"
+                      title="Restart Video"
+                      aria-label="Restart Video"
                     >
                       <RotateCcw className="w-4 h-4" />
                     </button>
 
                     <button
-                      onClick={toggleAmbientSound}
+                      onClick={toggleMute}
                       className={`p-1.5 focus:outline-none transition-colors ${
+                        !isMuted ? 'text-[#D4AF37]' : 'text-neutral-400 hover:text-white'
+                      }`}
+                      title={isMuted ? "Unmute Video Audio" : "Mute Video Audio"}
+                      aria-label={isMuted ? "Unmute Video Audio" : "Mute Video Audio"}
+                    >
+                      {!isMuted ? <Volume2 className="w-4 h-4" /> : <VolumeX className="w-4 h-4" />}
+                    </button>
+
+                    <button
+                      onClick={toggleAmbientSound}
+                      className={`hidden sm:inline-flex p-1.5 focus:outline-none transition-colors ${
                         ambientSoundActive ? 'text-[#D4AF37]' : 'text-neutral-400 hover:text-white'
                       }`}
-                      title="Atmospheric Luxury Chime Sound"
+                      title="Ambient Chime Atmosphere"
+                      aria-label="Ambient Chime Atmosphere"
                     >
-                      {ambientSoundActive ? <Volume2 className="w-4 h-4" /> : <VolumeX className="w-4 h-4" />}
+                      <Sparkles className="w-3.5 h-3.5" />
                     </button>
                   </div>
 
                   {/* Scrubber Bar */}
-                  <div className="flex-1 max-w-md mx-2 h-1.5 bg-neutral-800 rounded-full overflow-hidden cursor-pointer">
+                  <div 
+                    onClick={handleSeek}
+                    className="flex-1 max-w-md mx-2 h-2 bg-neutral-800 rounded-full overflow-hidden cursor-pointer relative"
+                  >
                     <div 
                       className="h-full bg-gradient-to-r from-[#D4AF37] to-[#FFF2B2] transition-all duration-100"
                       style={{ width: `${videoProgress}%` }}
                     />
                   </div>
 
-                  <div className="text-[11px] tracking-widest text-[#D4AF37] font-mono">
-                    00:{Math.floor(videoProgress * 0.1).toString().padStart(2, '0')} / 00:10
+                  <div className="flex items-center space-x-2">
+                    <span className="text-[11px] tracking-widest text-[#D4AF37] font-mono whitespace-nowrap">
+                      {formatTime(currentTime)} / {formatTime(duration)}
+                    </span>
+
+                    <button
+                      onClick={toggleFullscreen}
+                      className="text-neutral-400 hover:text-white p-1.5 focus:outline-none transition-colors"
+                      title="Fullscreen"
+                      aria-label="Fullscreen"
+                    >
+                      <Maximize2 className="w-4 h-4" />
+                    </button>
                   </div>
                 </div>
               </div>
@@ -483,6 +395,7 @@ export const RoyalSuiteShowcase: React.FC<RoyalSuiteShowcaseProps> = ({
                       : 'bg-[#020F16]/85 text-[#D4AF37] border-[#D4AF37]/80 hover:scale-115 hover:bg-[#D4AF37] hover:text-[#031820]'
                   }`}
                   title="Inspect Royal Necklace"
+                  aria-label="Inspect Royal Necklace"
                 >
                   <span className="text-xs font-bold">1</span>
                 </button>
@@ -495,6 +408,7 @@ export const RoyalSuiteShowcase: React.FC<RoyalSuiteShowcaseProps> = ({
                       : 'bg-[#020F16]/85 text-[#D4AF37] border-[#D4AF37]/80 hover:scale-115 hover:bg-[#D4AF37] hover:text-[#031820]'
                   }`}
                   title="Inspect Solaris Ring"
+                  aria-label="Inspect Solaris Ring"
                 >
                   <span className="text-xs font-bold">2</span>
                 </button>
@@ -507,12 +421,13 @@ export const RoyalSuiteShowcase: React.FC<RoyalSuiteShowcaseProps> = ({
                       : 'bg-[#020F16]/85 text-[#D4AF37] border-[#D4AF37]/80 hover:scale-115 hover:bg-[#D4AF37] hover:text-[#031820]'
                   }`}
                   title="Inspect Chandelier Earrings"
+                  aria-label="Inspect Chandelier Earrings"
                 >
                   <span className="text-xs font-bold">3</span>
                 </button>
 
                 {/* Zoom Helper Tag */}
-                <div className="absolute top-4 right-4 bg-[#020F16]/85 border border-[#D4AF37]/40 px-3 py-1.5 text-[10px] tracking-[0.2em] uppercase text-[#D4AF37] backdrop-blur-md">
+                <div className="absolute top-4 right-4 bg-[#020F16]/85 border border-[#D4AF37]/40 px-3 py-1.5 text-[10px] tracking-[0.2em] uppercase text-[#D4AF37] backdrop-blur-md pointer-events-none">
                   High-Jewellery Still Photo
                 </div>
               </div>
@@ -590,7 +505,7 @@ export const RoyalSuiteShowcase: React.FC<RoyalSuiteShowcaseProps> = ({
             {/* Guaranteed Authenticity & Private Viewing */}
             <div className="bg-[#020F16] border border-[#062B3A] p-4 flex items-center space-x-3 text-xs text-neutral-300 font-light">
               <CheckCircle2 className="w-5 h-5 text-[#D4AF37] flex-shrink-0" />
-              <span>Available for private viewings & bridal consultations via ReiStella Flagship Partners in Ahmedabad, Vadodara, and Rajkot.</span>
+              <span>Available for private viewings & bridal consultations via ReiStella partners in Ahmedabad, Vadodara, and Rajkot.</span>
             </div>
 
           </div>
@@ -600,3 +515,4 @@ export const RoyalSuiteShowcase: React.FC<RoyalSuiteShowcaseProps> = ({
     </section>
   );
 };
+

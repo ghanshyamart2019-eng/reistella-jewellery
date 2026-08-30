@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { EDITORIAL_PIECES, JewelleryPiece, BRAND_CONFIG } from '../data/brandConfig';
 import { EditorialModal } from '../components/EditorialModal';
-import { Sparkles, ArrowUpRight, MessageCircle } from 'lucide-react';
+import { RoyalSuiteShowcase } from '../components/RoyalSuiteShowcase';
+import { Sparkles, ArrowUpRight, MessageCircle, Flame } from 'lucide-react';
 
 interface NewTrendingPageProps {
   onNavigate: (pageId: string) => void;
@@ -27,9 +28,9 @@ export const NewTrendingPage: React.FC<NewTrendingPageProps> = ({ onNavigate, on
   };
 
   return (
-    <div className="bg-[#031820] text-neutral-100 selection:bg-[#D4AF37]/30 selection:text-[#D4AF37] py-20 sm:py-32 border-t border-[#062B3A]">
+    <div className="bg-[#031820] text-neutral-100 selection:bg-[#D4AF37]/30 selection:text-[#D4AF37] pt-20 sm:pt-28 pb-24 border-t border-[#062B3A]">
       {/* Header */}
-      <section className="px-6 sm:px-8 lg:px-12 pb-12 max-w-5xl mx-auto text-center space-y-4">
+      <section className="px-6 sm:px-8 lg:px-12 pb-10 max-w-5xl mx-auto text-center space-y-4">
         <div className="flex items-center justify-center space-x-3">
           <Sparkles className="w-4 h-4 text-[#D4AF37]" />
           <span className="text-[10px] sm:text-[11px] tracking-[0.45em] text-[#D4AF37] uppercase font-light">
@@ -43,30 +44,52 @@ export const NewTrendingPage: React.FC<NewTrendingPageProps> = ({ onNavigate, on
         <p className="text-xs sm:text-sm text-neutral-300 font-light max-w-xl mx-auto tracking-wider">
           An editorial curation of our most coveted silhouettes, celebrated for their sculptural magnetism and luminous brilliance.
         </p>
-
-        {/* Filter Pills */}
-        <div className="pt-8 flex flex-wrap items-center justify-center gap-2 sm:gap-3">
-          {categories.map((cat) => {
-            const isActive = selectedCategory === cat;
-            return (
-              <button
-                key={cat}
-                onClick={() => setSelectedCategory(cat)}
-                className={`text-[10px] sm:text-[11px] tracking-[0.25em] uppercase px-5 py-2.5 transition-all duration-300 ${
-                  isActive
-                    ? 'bg-[#D4AF37] text-[#031820] font-medium shadow-lg'
-                    : 'bg-[#020F16] text-neutral-400 hover:text-white border border-[#062B3A] hover:border-[#D4AF37]/40'
-                }`}
-              >
-                {cat}
-              </button>
-            );
-          })}
-        </div>
       </section>
 
-      {/* Editorial Lookbook Layout */}
-      <section className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 pb-16">
+      {/* ========================================================================= */}
+      {/* 1. FEATURED SPOTLIGHT: THE SOVEREIGN SOLAR SUITE & MOTION FILM            */}
+      {/* ========================================================================= */}
+      <div className="border-t border-b border-[#062B3A] bg-[#020F16]">
+        <RoyalSuiteShowcase 
+          onSelectPiece={onSelectPiece} 
+          onNavigateToFind={() => onNavigate('find')} 
+        />
+      </div>
+
+      {/* ========================================================================= */}
+      {/* 2. EDITORIAL LOOKBOOK COLLECTION GRID                                     */}
+      {/* ========================================================================= */}
+      <section className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 pt-20 sm:pt-24 pb-16">
+        <div className="text-center space-y-4 mb-12">
+          <div className="inline-flex items-center space-x-2 text-[10px] tracking-[0.35em] text-[#D4AF37] uppercase font-light">
+            <Flame className="w-3.5 h-3.5" />
+            <span>SEASONAL SILHOUETTES</span>
+          </div>
+          <h3 className="font-serif-luxury text-3xl sm:text-4xl text-white font-light">
+            Explore Trending Designs
+          </h3>
+          
+          {/* Filter Pills */}
+          <div className="pt-4 flex flex-wrap items-center justify-center gap-2 sm:gap-3">
+            {categories.map((cat) => {
+              const isActive = selectedCategory === cat;
+              return (
+                <button
+                  key={cat}
+                  onClick={() => setSelectedCategory(cat)}
+                  className={`text-[10px] sm:text-[11px] tracking-[0.25em] uppercase px-5 py-2.5 transition-all duration-300 ${
+                    isActive
+                      ? 'bg-[#D4AF37] text-[#031820] font-medium shadow-lg'
+                      : 'bg-[#020F16] text-neutral-400 hover:text-white border border-[#062B3A] hover:border-[#D4AF37]/40'
+                  }`}
+                >
+                  {cat}
+                </button>
+              );
+            })}
+          </div>
+        </div>
+
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 sm:gap-10">
           {filteredPieces.map((piece, index) => {
             const isHeroCard = index === 0 && selectedCategory === 'All';

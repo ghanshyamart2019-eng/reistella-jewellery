@@ -68,6 +68,11 @@ export const BRAND_CONFIG = {
     contactEmail: 'concierge@reistella.com',
   },
 
+  // Videos
+  videos: {
+    movie: '/THE FINAL.mp4',
+  },
+
   // Campaign & High-Editorial Imagery
   images: {
     // Official ReiStella Hero campaign piece provided by user (/public/3.jpg)
@@ -236,31 +241,38 @@ export const PARTNER_CITIES: PartnerCity[] = [
   }
 ];
 
-// Partner Cities Data with direct WhatsApp Business catalog links
+// Partner Cities Data for Regional Concierge Connections
 export const CITY_PARTNERS: CityPartner[] = [
   {
     id: 'ahmedabad',
     cityName: 'Ahmedabad',
-    partnerName: 'ReiStella Flagship Partner',
+    partnerName: 'ReiStella City Concierge',
     image: 'https://images.unsplash.com/photo-1617806118233-18e1c0c22425?auto=format&fit=crop&q=80&w=800',
-    whatsappUrl: 'https://wa.me/910000000000?text=Hi%20ReiStella%20Ahmedabad,%20I%20saw%20your%20designs%20on%20the%20website%20and%20want%20to%20explore%20the%20catalog.',
-    tagline: 'Exclusive Flagship Showroom'
+    whatsappUrl: `${BRAND_CONFIG.urls.whatsapp}&text=${encodeURIComponent(
+      'Hello ReiStella Concierge, I would like to connect with the Ahmedabad partner team for a private collection discovery.'
+    )}`,
+    tagline: 'Private Consultations & Flagship Showcase'
   },
   {
-    id: 'mumbai',
-    cityName: 'Mumbai',
-    partnerName: 'ReiStella Studio Partner',
+    id: 'vadodara',
+    cityName: 'Vadodara',
+    partnerName: 'ReiStella City Concierge',
     image: 'https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?auto=format&fit=crop&q=80&w=800',
-    whatsappUrl: 'https://wa.me/910000000000?text=Hi%20ReiStella%20Mumbai,%20I%20want%20to%20view%20your%20WhatsApp%20catalog.',
-    tagline: 'Boutique Collection Partner'
+    whatsappUrl: `${BRAND_CONFIG.urls.whatsapp}&text=${encodeURIComponent(
+      'Hello ReiStella Concierge, I would like to connect with the Vadodara / Baroda partner team for private jewellery advisory.'
+    )}`,
+    tagline: 'Curated Showcase & Bespoke Styling'
   },
   {
-    id: 'surat',
-    cityName: 'Surat',
-    partnerName: 'ReiStella Gallery Partner',
+    id: 'rajkot',
+    cityName: 'Rajkot',
+    partnerName: 'ReiStella City Concierge',
     image: 'https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?auto=format&fit=crop&q=80&w=800',
-    whatsappUrl: 'https://wa.me/910000000000?text=Hi%20ReiStella%20Surat,%20I%20would%20like%20to%20buy%20from%20your%20catalog.',
-    tagline: 'Diamond District Partner'
+    whatsappUrl: `${BRAND_CONFIG.urls.whatsapp}&text=${encodeURIComponent(
+      'Hello ReiStella Concierge, I would like to connect with the Rajkot partner team for signature collection discovery.'
+    )}`,
+    tagline: 'High-Jewellery Advisory & Viewings'
   }
 ];
+
 
