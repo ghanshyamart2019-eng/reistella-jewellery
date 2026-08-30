@@ -32,6 +32,15 @@ export interface CollectionCampaign {
   mood: string;
 }
 
+export interface CityPartner {
+  id: string;
+  cityName: string;
+  partnerName: string;
+  image: string;
+  whatsappUrl: string;
+  tagline: string;
+}
+
 export interface PartnerCity {
   city: string;
   displayName: string;
@@ -50,14 +59,19 @@ export const BRAND_CONFIG = {
   urls: {
     instagram: 'https://www.instagram.com/reistella_official/',
     facebook: 'https://facebook.com/reistellajewellery',
+    pinterest: 'https://pinterest.com/reistellajewellery',
+    youtube: 'https://youtube.com/@reistella',
+    threads: 'https://threads.net/@reistella_official',
+    linkedin: 'https://linkedin.com/company/reistella',
+    x: 'https://x.com/reistella',
     whatsapp: 'https://wa.me/?text=Hello%20ReiStella%20Concierge%2C%20I%20would%20like%20to%20connect%20with%20the%20maison%20and%20discover%20the%20collection.',
     contactEmail: 'concierge@reistella.com',
   },
 
   // Campaign & High-Editorial Imagery
   images: {
-    // Official ReiStella Hero campaign piece provided by user
-    heroReference: 'https://reistella.com/wp-content/uploads/2026/08/ChatGPT-Image-Aug-25-2026-10_36_30-PM-1024x576.png',
+    // Official ReiStella Hero campaign piece provided by user (/public/3.jpg)
+    heroReference: '/3.jpg',
     
     // High-fashion jewellery editorial imagery (cinematic dark atmosphere, crisp luxury lighting)
     editorial1: 'https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?q=80&w=1600&auto=format&fit=crop', // Luxury necklace on deep navy background
@@ -84,38 +98,38 @@ export const NAVIGATION_ITEMS: NavItem[] = [
 
 export const EDITORIAL_PIECES: JewelleryPiece[] = [
   {
-    id: 'sovereign-reign-necklace',
-    title: 'The Sovereign Reign',
+    id: 'sovereign-solar-royal-necklace',
+    title: 'The Sovereign Solar Royal Necklace',
     collection: 'Signature Pieces',
-    subtitle: 'High-Jewellery Campaign Piece',
-    description: 'An architectural composition of light and geometry designed to crown the neckline with sovereign radiance.',
+    subtitle: 'High-Jewellery Centerpiece & Motion Campaign Film',
+    description: 'An architectural composition of canary yellow sapphires and pavé diamonds, featuring multi-tiered chandelier pendeloques and floral clusters.',
     imageUrl: BRAND_CONFIG.images.heroReference,
     aspectRatio: '16/9',
-    tags: ['Hero Campaign', 'Signature'],
+    tags: ['Hero Campaign', 'Signature', 'Royal Suite'],
     featured: true,
-    editorialNote: 'Official ReiStella campaign centerpiece.'
+    editorialNote: 'Official ReiStella campaign centerpiece showcased in motion.'
+  },
+  {
+    id: 'solaris-bloom-ring',
+    title: 'Solaris Bloom Cocktail Ring',
+    collection: 'Statement Jewellery',
+    subtitle: 'Canary Yellow Sapphire & Diamond Halo Petals',
+    description: 'A radiant floral blossom ring crowned with an intense canary yellow sapphire surrounded by eight diamond petals on a pavé-set band.',
+    imageUrl: BRAND_CONFIG.images.editorial3,
+    aspectRatio: '1/1',
+    tags: ['Statement', 'Royal Suite'],
+    editorialNote: 'Signature crown basket mount ensuring maximum fire and light refraction.'
   },
   {
     id: 'etoile-nocturne-earrings',
-    title: 'Étoile Nocturne Drops',
+    title: 'Étoile Chandelier Drop Earrings',
     collection: 'Festive & Occasion',
-    subtitle: 'Cascading Radiance In Motion',
-    description: 'Fluid movement captured in faceted brilliance, evoking starlight against the midnight sky.',
+    subtitle: 'Articulated Yellow Sapphire & Diamond Drops',
+    description: 'Dual-tiered architectural chandelier earrings engineered with featherweight poise, mirroring the grand floral motifs of the centerpiece collar.',
     imageUrl: BRAND_CONFIG.images.editorial2,
     aspectRatio: '4/5',
-    tags: ['Occasion', 'Radiance'],
-    editorialNote: 'Sculpted for kinetic brilliance and poise.'
-  },
-  {
-    id: 'solaris-crown-ring',
-    title: 'Solaris Crown Ring',
-    collection: 'Statement Jewellery',
-    subtitle: 'Sculpted Silhouette & Luminary Fire',
-    description: 'A contemporary emblem of personal authority and modern luxury, set in commanding proportions.',
-    imageUrl: BRAND_CONFIG.images.editorial3,
-    aspectRatio: '1/1',
-    tags: ['Statement', 'Sculptural'],
-    editorialNote: 'Maximum light refraction with architectural mounts.'
+    tags: ['Occasion', 'Royal Suite'],
+    editorialNote: 'Sculpted for kinetic brilliance and 360-degree luminescence.'
   },
   {
     id: 'celestial-cuff',
@@ -221,3 +235,32 @@ export const PARTNER_CITIES: PartnerCity[] = [
     description: 'Connect with a ReiStella partner in Rajkot for styling guidance and campaign pieces.'
   }
 ];
+
+// Partner Cities Data with direct WhatsApp Business catalog links
+export const CITY_PARTNERS: CityPartner[] = [
+  {
+    id: 'ahmedabad',
+    cityName: 'Ahmedabad',
+    partnerName: 'ReiStella Flagship Partner',
+    image: 'https://images.unsplash.com/photo-1617806118233-18e1c0c22425?auto=format&fit=crop&q=80&w=800',
+    whatsappUrl: 'https://wa.me/910000000000?text=Hi%20ReiStella%20Ahmedabad,%20I%20saw%20your%20designs%20on%20the%20website%20and%20want%20to%20explore%20the%20catalog.',
+    tagline: 'Exclusive Flagship Showroom'
+  },
+  {
+    id: 'mumbai',
+    cityName: 'Mumbai',
+    partnerName: 'ReiStella Studio Partner',
+    image: 'https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?auto=format&fit=crop&q=80&w=800',
+    whatsappUrl: 'https://wa.me/910000000000?text=Hi%20ReiStella%20Mumbai,%20I%20want%20to%20view%20your%20WhatsApp%20catalog.',
+    tagline: 'Boutique Collection Partner'
+  },
+  {
+    id: 'surat',
+    cityName: 'Surat',
+    partnerName: 'ReiStella Gallery Partner',
+    image: 'https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?auto=format&fit=crop&q=80&w=800',
+    whatsappUrl: 'https://wa.me/910000000000?text=Hi%20ReiStella%20Surat,%20I%20would%20like%20to%20buy%20from%20your%20catalog.',
+    tagline: 'Diamond District Partner'
+  }
+];
+

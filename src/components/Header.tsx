@@ -46,7 +46,7 @@ export const Header: React.FC<HeaderProps> = ({ activePage, onNavigate }) => {
           <div className="absolute left-6 sm:left-10 lg:hidden flex items-center">
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="text-[#D4AF37] hover:text-white transition-colors p-2 focus:outline-none"
+              className="text-[#D4AF37] hover:text-white transition-all duration-300 transform hover:scale-125 p-2 focus:outline-none"
             >
               {mobileMenuOpen ? <X className="w-8 h-8" /> : <Menu className="w-8 h-8" />}
             </button>
@@ -58,16 +58,25 @@ export const Header: React.FC<HeaderProps> = ({ activePage, onNavigate }) => {
             {/* Logo and Brand Name */}
             <button
               onClick={() => handleNavClick('home')}
-              className="group flex items-center gap-4 sm:gap-5 focus:outline-none transition-opacity hover:opacity-90"
+              className="group flex items-center gap-3 sm:gap-4 focus:outline-none transition-all duration-300 transform hover:scale-105 hover:drop-shadow-[0_0_20px_rgba(212,175,55,0.45)]"
               aria-label="ReiStella Jewellery — Home"
             >
-              <div className="flex items-center transition-all duration-500">
-                <ReiStellaLogo size={isScrolled ? 'md' : 'xl'} alt="ReiStella Jewellery" />
+              <div className="flex items-center transition-all duration-500 transform group-hover:scale-110">
+                <ReiStellaLogo 
+                  className={`transition-all duration-500 ${
+                    isScrolled 
+                      ? 'h-11 sm:h-12 md:h-13' 
+                      : 'h-13 sm:h-15 md:h-17 lg:h-18'
+                  }`} 
+                  alt="ReiStella Jewellery" 
+                />
               </div>
               
               <span 
-                className={`text-[#D4AF37] font-medium tracking-[0.25em] uppercase transition-all duration-500 ${
-                  isScrolled ? 'text-[24px]' : 'text-[32px]'
+                className={`text-[#D4AF37] font-normal sm:font-medium tracking-[0.22em] uppercase transition-all duration-500 group-hover:text-[#F3E5AB] ${
+                  isScrolled 
+                    ? 'text-base sm:text-lg md:text-xl' 
+                    : 'text-lg sm:text-xl md:text-2xl lg:text-[24px]'
                 }`} 
                 style={{ fontFamily: '"Playfair Display", "Times New Roman", Times, serif' }}
               >
@@ -83,9 +92,9 @@ export const Header: React.FC<HeaderProps> = ({ activePage, onNavigate }) => {
                   <button
                     key={item.id}
                     onClick={() => handleNavClick(item.id)}
-                    className={`text-[13px] xl:text-[14px] tracking-[0.2em] uppercase transition-all duration-300 relative py-2 focus:outline-none whitespace-nowrap ${
+                    className={`text-[13px] xl:text-[14px] tracking-[0.2em] uppercase transition-all duration-300 ease-out transform hover:scale-120 hover:drop-shadow-[0_0_12px_rgba(212,175,55,0.6)] relative py-2 px-1 focus:outline-none whitespace-nowrap ${
                       isActive
-                        ? 'text-[#D4AF37] font-medium'
+                        ? 'text-[#D4AF37] font-medium scale-105'
                         : 'text-neutral-300 hover:text-[#D4AF37] font-normal'
                     }`}
                     style={{ fontFamily: '"Playfair Display", "Times New Roman", Times, serif' }}
@@ -125,7 +134,7 @@ export const Header: React.FC<HeaderProps> = ({ activePage, onNavigate }) => {
                   <button 
                     key={item.id} 
                     onClick={() => handleNavClick(item.id)} 
-                    className="text-2xl text-neutral-200 hover:text-[#D4AF37] font-medium tracking-[0.15em] uppercase transition-colors"
+                    className="text-2xl text-neutral-200 hover:text-[#D4AF37] font-medium tracking-[0.15em] uppercase transition-all duration-300 transform hover:scale-115"
                     style={{ fontFamily: '"Playfair Display", "Times New Roman", Times, serif' }}
                   >
                     {item.label}

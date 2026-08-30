@@ -1,10 +1,6 @@
-/**
- * @license
- * SPDX-License-Identifier: Apache-2.0
- */
-
-import { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Header } from './components/Header';
+import { SocialSidebar } from './components/SocialSidebar';
 import { Footer } from './components/Footer';
 import { HomePage } from './pages/HomePage';
 import { AboutPage } from './pages/AboutPage';
@@ -17,13 +13,13 @@ import { JewelleryPiece } from './data/brandConfig';
 
 const SECTION_IDS = ['home', 'about', 'trending', 'collections', 'find', 'contact'];
 
-export default function App() {
+export function App() {
   const [activePage, setActivePage] = useState<string>('home');
   const [selectedPiece, setSelectedPiece] = useState<JewelleryPiece | null>(null);
   const isScrollingProgrammatically = useRef<boolean>(false);
   const scrollTimeoutRef = useRef<number | null>(null);
 
-  // ScrollSpy: Automatically detect active section on scroll
+  // ScrollSpy: Automatically detect active section on scroll and switch pages
   useEffect(() => {
     const handleScroll = () => {
       if (isScrollingProgrammatically.current) return;
@@ -34,7 +30,7 @@ export default function App() {
       const documentHeight = document.documentElement.scrollHeight;
 
       // If at bottom of page, highlight the last section (contact)
-      if (window.scrollY + windowHeight >= documentHeight - 50) {
+      if (window.scrollY + windowHeight >= documentHeight - 60) {
         setActivePage('contact');
         if (window.location.hash !== '#contact') {
           window.history.replaceState(null, '', '#contact');
@@ -70,7 +66,6 @@ export default function App() {
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
-    // Run once on initial mount
     handleScroll();
 
     return () => window.removeEventListener('scroll', handleScroll);
@@ -82,7 +77,7 @@ export default function App() {
     if (hash && SECTION_IDS.includes(hash)) {
       setTimeout(() => {
         handleNavigate(hash);
-      }, 200);
+      }, 250);
     }
   }, []);
 
@@ -101,7 +96,7 @@ export default function App() {
     } else {
       const element = document.getElementById(pageId);
       if (element) {
-        const headerOffset = 70;
+        const headerOffset = 75;
         const elementPosition = element.getBoundingClientRect().top;
         const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
 
@@ -120,11 +115,15 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-[#031820] text-neutral-100 flex flex-col justify-between selection:bg-[#D4AF37]/30 selection:text-[#D4AF37]">
-      {/* Persistent Luxury Navigation Header */}
+    <div className="min-h-screen bg-[#031820] text-neutral-100 flex flex-col justify-between selection:bg-[#D4AF37]/30 selection:text-[#D4AF37] relative">
+      
+      {/* Luxury Sticky / Floating Navigation Header */}
       <Header activePage={activePage} onNavigate={handleNavigate} />
 
-      {/* Sequential Single-Page Editorial Flow */}
+      {/* Floating Vertical Social Sidebar */}
+      <SocialSidebar />
+
+      {/* Sequential Single-Page Editorial Flow — Continuous Scrolling across all pages */}
       <main className="flex-grow">
         {/* 1. Home Section: Hero, Taglines, Brand Intro & Signature Piece */}
         <section id="home">
@@ -173,8 +172,10 @@ export default function App() {
         onNavigateToFind={() => handleNavigate('find')}
       />
 
-      {/* Persistent Footer */}
+      {/* Persistent Luxury Footer */}
       <Footer onNavigate={handleNavigate} />
     </div>
   );
 }
+
+export default App;

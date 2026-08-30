@@ -17,14 +17,14 @@ export const ReiStellaLogo: React.FC<ReiStellaLogoProps> = ({
   alt = 'ReiStella Jewellery',
 }) => {
   const sizeClasses = {
-    header: 'h-[44px] sm:h-[48px] md:h-[52px] lg:h-[58px] max-h-[60px] w-auto',
-    sm: 'h-[40px] sm:h-[44px] md:h-[48px] lg:h-[50px] w-auto',
-    footer: 'h-[48px] sm:h-[52px] md:h-[56px] lg:h-[60px] w-auto',
-    md: 'h-[44px] sm:h-[48px] md:h-[52px] w-auto',
-    lg: 'h-[52px] sm:h-[60px] md:h-[68px] w-auto',
-    xl: 'h-[75px] sm:h-[90px] md:h-[105px] w-auto',
-    hero: 'h-[110px] sm:h-[135px] md:h-[155px] lg:h-[175px] w-auto',
-  }[size] || 'h-[44px] sm:h-[50px] md:h-[58px] w-auto';
+    header: 'h-12 sm:h-14 md:h-16 w-auto',
+    sm: 'h-8 sm:h-10 w-auto',
+    footer: 'h-12 sm:h-14 md:h-16 w-auto',
+    md: 'h-10 sm:h-12 md:h-14 w-auto',
+    lg: 'h-14 sm:h-16 md:h-20 w-auto',
+    xl: 'h-20 sm:h-24 md:h-28 w-auto',
+    hero: 'h-28 sm:h-36 md:h-44 w-auto',
+  }[size] || 'h-12 sm:h-14 md:h-16 w-auto';
 
   return (
     <img

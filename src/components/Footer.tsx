@@ -37,9 +37,6 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
             <p className="font-serif-luxury text-xl sm:text-2xl text-neutral-200 italic tracking-wider max-w-lg font-light pt-1">
               "{BRAND_CONFIG.tagline}"
             </p>
-            <p className="text-xs text-[#D4AF37] tracking-[0.25em] uppercase font-light">
-              {BRAND_CONFIG.subTagline}
-            </p>
           </div>
 
           {/* Direct Private Concierge Box */}
