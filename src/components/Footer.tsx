@@ -26,11 +26,22 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
               <button
                 id="footer-brand-logo-btn"
                 onClick={() => handleNavClick('home')}
-                className="group text-left focus:outline-none flex items-center transition-opacity hover:opacity-95"
+                className="group text-left focus:outline-none flex items-center gap-3.5 transition-all duration-300 hover:opacity-95"
                 aria-label="ReiStella Jewellery — Home"
                 title="ReiStella Jewellery — Home"
               >
                 <ReiStellaLogo size="footer" alt="ReiStella Jewellery" />
+                <div className="flex flex-col justify-center text-left">
+                  <span 
+                    className="text-[#D4AF37] text-xl sm:text-2xl font-normal tracking-[0.22em] uppercase leading-none"
+                    style={{ fontFamily: '"Playfair Display", "Times New Roman", Times, serif' }}
+                  >
+                    ReiStella
+                  </span>
+                  <span className="text-white text-[9px] sm:text-[10px] tracking-[0.4em] uppercase font-light mt-1">
+                    JEWELLERY
+                  </span>
+                </div>
               </button>
             </div>
             

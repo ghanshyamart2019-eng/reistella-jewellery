@@ -72,16 +72,27 @@ export const Header: React.FC<HeaderProps> = ({ activePage, onNavigate }) => {
                 />
               </div>
               
-              <span 
-                className={`text-[#D4AF37] font-normal sm:font-medium tracking-[0.22em] uppercase transition-all duration-500 group-hover:text-[#F3E5AB] ${
-                  isScrolled 
-                    ? 'text-base sm:text-lg md:text-xl' 
-                    : 'text-lg sm:text-xl md:text-2xl lg:text-[24px]'
-                }`} 
-                style={{ fontFamily: '"Playfair Display", "Times New Roman", Times, serif' }}
-              >
-                ReiStella
-              </span>
+              <div className="flex flex-col justify-center text-left">
+                <span 
+                  className={`text-[#D4AF37] font-normal sm:font-medium tracking-[0.22em] uppercase transition-all duration-500 group-hover:text-[#F3E5AB] leading-none ${
+                    isScrolled 
+                      ? 'text-base sm:text-lg md:text-xl' 
+                      : 'text-lg sm:text-xl md:text-2xl lg:text-[24px]'
+                  }`} 
+                  style={{ fontFamily: '"Playfair Display", "Times New Roman", Times, serif' }}
+                >
+                  ReiStella
+                </span>
+                <span 
+                  className={`text-white font-light tracking-[0.35em] sm:tracking-[0.42em] uppercase transition-all duration-500 mt-0.5 sm:mt-1 ${
+                    isScrolled 
+                      ? 'text-[8px] sm:text-[9px] md:text-[10px]' 
+                      : 'text-[9px] sm:text-[10px] md:text-[11px]'
+                  }`}
+                >
+                  JEWELLERY
+                </span>
+              </div>
             </button>
 
             {/* Desktop Navigation Links (Added margin-left to create perfect spacing from the brand name) */}
@@ -127,8 +138,17 @@ export const Header: React.FC<HeaderProps> = ({ activePage, onNavigate }) => {
             className="fixed inset-0 z-40 bg-[#031820] flex flex-col justify-between px-8 pt-28 pb-10 lg:hidden overflow-y-auto"
           >
              <div className="flex flex-col space-y-6 text-center">
-                <div className="flex justify-center pb-4 border-b border-[#062B3A]">
+                <div className="flex flex-col items-center justify-center pb-4 border-b border-[#062B3A]">
                    <ReiStellaLogo size="md" />
+                   <span 
+                     className="text-[#D4AF37] text-xl font-normal tracking-[0.22em] uppercase mt-3"
+                     style={{ fontFamily: '"Playfair Display", "Times New Roman", Times, serif' }}
+                   >
+                     ReiStella
+                   </span>
+                   <span className="text-white text-[10px] tracking-[0.4em] uppercase font-light mt-0.5">
+                     JEWELLERY
+                   </span>
                 </div>
                 {NAVIGATION_ITEMS.map((item) => (
                   <button 

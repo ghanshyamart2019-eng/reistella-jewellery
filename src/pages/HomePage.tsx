@@ -5,15 +5,9 @@ import {
   JewelleryPiece 
 } from '../data/brandConfig';
 import { ReiStellaLogo } from '../components/ReiStellaLogo';
-import { ReiStellaMovieSection } from '../components/ReiStellaMovieSection';
 import { 
   ArrowUpRight, 
-  Sparkles,
-  ChevronDown, 
-  Play,
-  Compass,
-  Crown,
-  Layers
+  ChevronDown 
 } from 'lucide-react';
 
 interface HomePageProps {
@@ -22,21 +16,6 @@ interface HomePageProps {
 }
 
 export const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
-  const scrollToMovie = () => {
-    const element = document.getElementById('reistella-movie-section');
-    if (element) {
-      const headerOffset = 80;
-      const elementPosition = element.getBoundingClientRect().top;
-      const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: 'smooth'
-      });
-    } else {
-      onNavigate('trending');
-    }
-  };
-
   return (
     <div className="bg-[#031820] text-neutral-100 selection:bg-[#D4AF37]/30 selection:text-[#D4AF37] relative">
       
@@ -55,7 +34,6 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
             loading="eager"
             referrerPolicy="no-referrer"
           />
-          {/* Subtle directional gradient to make left text ultra legible while keeping background jewellery unobstructed */}
           <div className="absolute inset-0 bg-gradient-to-r from-[#020F16]/90 via-[#020F16]/60 md:via-[#020F16]/40 to-transparent" />
           <div className="absolute inset-0 bg-gradient-to-t from-[#031820] via-transparent to-[#020F16]/60" />
         </div>
@@ -66,9 +44,20 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
               initial={{ opacity: 0, scale: 0.95, y: 15 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               transition={{ duration: 0.9, delay: 0.2 }}
-              className="mb-6 sm:mb-8 text-left"
+              className="mb-6 sm:mb-8 flex items-center gap-4 sm:gap-6 text-left"
             >
-              <ReiStellaLogo size="hero" alt="ReiStella Jewellery" />
+              <ReiStellaLogo size="hero" className="h-16 sm:h-20 md:h-28 lg:h-32 w-auto flex-shrink-0" alt="ReiStella Jewellery Emblem" />
+              <div className="flex flex-col justify-center text-left">
+                <span 
+                  className="text-[#D4AF37] font-normal tracking-[0.2em] sm:tracking-[0.24em] uppercase leading-none text-2xl sm:text-3xl md:text-4xl lg:text-5xl"
+                  style={{ fontFamily: '"Playfair Display", "Times New Roman", Times, serif' }}
+                >
+                  ReiStella
+                </span>
+                <span className="text-white font-light tracking-[0.45em] sm:tracking-[0.55em] uppercase text-[10px] sm:text-xs md:text-sm lg:text-base mt-1.5 sm:mt-2.5">
+                  JEWELLERY
+                </span>
+              </div>
             </motion.div>
 
             <motion.p
@@ -89,12 +78,11 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
               Born of a vision. Created for those who dare to shine.
             </motion.p>
 
-            {/* Dual CTAs: DISCOVER REISTELLA & WATCH THE STORY */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.9, delay: 0.7 }}
-              className="mt-8 sm:mt-10 flex flex-col sm:flex-row items-stretch sm:items-center justify-start gap-4"
+              className="mt-8 sm:mt-10 flex items-center justify-start"
             >
               <button
                 id="hero-discover-reistella-cta"
@@ -103,15 +91,6 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
               >
                 <span>DISCOVER REISTELLA</span>
                 <ArrowUpRight className="w-3.5 h-3.5 text-[#031820] transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1" />
-              </button>
-
-              <button
-                id="hero-watch-movie-cta"
-                onClick={scrollToMovie}
-                className="group relative inline-flex items-center justify-center space-x-3 text-xs tracking-[0.32em] uppercase text-white hover:text-[#D4AF37] transition-all duration-300 py-3.5 px-8 border border-white/30 hover:border-[#D4AF37] bg-[#031820]/50 backdrop-blur-sm shadow-[0_0_15px_rgba(0,0,0,0.5)]"
-              >
-                <Play className="w-3 h-3 fill-current text-[#D4AF37]" />
-                <span>WATCH THE MOVIE</span>
               </button>
             </motion.div>
           </div>
@@ -160,114 +139,6 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
             <p className="text-xs sm:text-sm text-neutral-300 font-light leading-relaxed italic">
               "Every brilliance has a beginning. ReiStella was born from a vision to transform jewellery from ornament into an expression of identity, emotion and dreams."
             </p>
-          </div>
-        </div>
-      </section>
-
-      {/* ========================================================================= */}
-      {/* 3. THE REISTELLA MOVIE (CINEMATIC BRAND FILM)                             */}
-      {/* ========================================================================= */}
-      <ReiStellaMovieSection onNavigate={onNavigate} />
-
-      {/* ========================================================================= */}
-      {/* 4. WHY REISTELLA (Pillars of Maison Philosophy)                           */}
-      {/* ========================================================================= */}
-      <section className="py-20 sm:py-28 px-6 sm:px-8 lg:px-12 bg-[#020F16] border-b border-[#062B3A]">
-        <div className="max-w-7xl mx-auto space-y-14">
-          <div className="text-center space-y-3">
-            <span className="text-xs tracking-[0.35em] text-[#D4AF37] uppercase font-light">
-              MAISON PILLARS
-            </span>
-            <h3 className="font-serif-luxury text-3xl sm:text-4xl text-white font-light tracking-wide">
-              Why ReiStella
-            </h3>
-            <p className="text-neutral-400 text-xs sm:text-sm tracking-wider max-w-xl mx-auto font-light">
-              A synthesis of sovereign design, sculptural harmony, and personal expression.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-            <div className="bg-[#031820] border border-[#062B3A] p-7 space-y-4">
-              <div className="p-3 bg-[#020F16] border border-[#062B3A] text-[#D4AF37] w-fit">
-                <Crown className="w-5 h-5" />
-              </div>
-              <h4 className="font-serif-luxury text-xl text-white font-light">Sovereign Brilliance</h4>
-              <p className="text-xs text-neutral-300 font-light leading-relaxed">
-                Jewellery engineered to command attention with poise, framing your sovereign presence effortlessly.
-              </p>
-            </div>
-
-            <div className="bg-[#031820] border border-[#062B3A] p-7 space-y-4">
-              <div className="p-3 bg-[#020F16] border border-[#062B3A] text-[#D4AF37] w-fit">
-                <Layers className="w-5 h-5" />
-              </div>
-              <h4 className="font-serif-luxury text-xl text-white font-light">Sculptural Balance</h4>
-              <p className="text-xs text-neutral-300 font-light leading-relaxed">
-                Precision articulation and ergonomic weight balance allow our pieces to move naturally with every gesture.
-              </p>
-            </div>
-
-            <div className="bg-[#031820] border border-[#062B3A] p-7 space-y-4">
-              <div className="p-3 bg-[#020F16] border border-[#062B3A] text-[#D4AF37] w-fit">
-                <Sparkles className="w-5 h-5" />
-              </div>
-              <h4 className="font-serif-luxury text-xl text-white font-light">Personal Expression</h4>
-              <p className="text-xs text-neutral-300 font-light leading-relaxed">
-                Created for individuals who dare to shine on their own terms, turning every occasion into a milestone.
-              </p>
-            </div>
-
-            <div className="bg-[#031820] border border-[#062B3A] p-7 space-y-4">
-              <div className="p-3 bg-[#020F16] border border-[#062B3A] text-[#D4AF37] w-fit">
-                <Compass className="w-5 h-5" />
-              </div>
-              <h4 className="font-serif-luxury text-xl text-white font-light">A Story Beyond</h4>
-              <p className="text-xs text-neutral-300 font-light leading-relaxed">
-                More than adornment, each piece is a Chapter in an evolving dialogue of beauty, art, and modern luxury.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ========================================================================= */}
-      {/* 6. FINAL CINEMATIC STATEMENT                                              */}
-      {/* ========================================================================= */}
-      <section className="relative py-24 sm:py-32 px-6 sm:px-8 text-center bg-[#020F16] overflow-hidden">
-        <div className="absolute inset-0 opacity-20 pointer-events-none">
-          <img
-            src={BRAND_CONFIG.images.heroReference}
-            alt="ReiStella Finale"
-            className="w-full h-full object-cover object-center scale-110"
-            referrerPolicy="no-referrer"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#020F16] via-[#020F16]/90 to-[#020F16]" />
-        </div>
-
-        <div className="relative z-10 max-w-4xl mx-auto space-y-6">
-          <div className="inline-flex items-center space-x-2 bg-[#031820] border border-[#D4AF37]/40 px-4 py-1.5 backdrop-blur-md">
-            <Sparkles className="w-3.5 h-3.5 text-[#D4AF37]" />
-            <span className="text-[10px] tracking-[0.35em] text-[#D4AF37] uppercase font-light">
-              THE STORY CONTINUES
-            </span>
-          </div>
-
-          <h3 className="font-serif-luxury text-3xl sm:text-5xl lg:text-6xl text-white font-light tracking-wider leading-tight">
-            LET YOUR BRILLIANCE REIGN.
-          </h3>
-
-          <p className="text-neutral-300 text-xs sm:text-sm tracking-[0.2em] uppercase font-light max-w-xl mx-auto leading-relaxed">
-            Experience the full collection or connect with our private concierge for bespoke styling and viewing.
-          </p>
-
-          <div className="pt-6 flex items-center justify-center">
-            <button
-              onClick={() => onNavigate('contact')}
-              className="inline-flex items-center space-x-3 text-xs tracking-[0.3em] uppercase text-[#031820] bg-[#D4AF37] hover:bg-[#E5C158] px-9 py-4 font-semibold transition-all duration-300 shadow-[0_0_30px_rgba(212,175,55,0.4)]"
-            >
-              <span>CONNECT WITH CONCIERGE</span>
-              <ArrowUpRight className="w-4 h-4 text-[#031820]" />
-            </button>
           </div>
         </div>
       </section>
