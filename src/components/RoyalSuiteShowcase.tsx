@@ -164,16 +164,16 @@ export const RoyalSuiteShowcase: React.FC<RoyalSuiteShowcaseProps> = ({
     {
       id: 'necklace',
       name: 'The Sovereign Solar Royal Necklace',
-      type: 'High-Jewellery Centerpiece',
-      gemstones: 'Canary Yellow Sapphires & Brilliant-cut Pavé Diamonds',
-      description: 'An articulated cascading grand collar set with oval and pear-cut canary yellow sapphires, encircled by dual halos of marquise and brilliant diamonds with suspended chandelier droplets.',
-      craftsmanship: '280+ hand-set gemstones, 18K white and yellow gold armature, articulated kinetic drape.'
+      type: 'Couture Jewellery Centerpiece',
+      gemstones: 'Canary Yellow Crystal Simulants & Brilliant Pavé Cubic Zirconia',
+      description: 'An articulated cascading grand collar set with oval and pear-cut canary yellow crystal simulants, encircled by dual halos of marquise and brilliant cubic zirconia with suspended chandelier droplets.',
+      craftsmanship: '280+ hand-set crystal simulants, 18K gold-tone alloy armature, articulated kinetic drape.'
     },
     {
       id: 'earrings',
       name: 'Étoile Chandelier Drop Earrings',
       type: 'Matching Chandelier Suite',
-      gemstones: 'Faceted Yellow Sapphires & Cascading Diamond Drops',
+      gemstones: 'Faceted Yellow Crystals & Cascading Cubic Zirconia Drops',
       description: 'Dual-tiered architectural chandelier earrings engineered with featherweight poise, mirroring the grand floral motifs of the centerpiece collar.',
       craftsmanship: 'Articulated links allowing 360-degree luminescence under evening lights.'
     },
@@ -181,8 +181,8 @@ export const RoyalSuiteShowcase: React.FC<RoyalSuiteShowcaseProps> = ({
       id: 'ring',
       name: 'Solaris Bloom Statement Ring',
       type: 'Cocktail Statement Ring',
-      gemstones: 'Canary Yellow Sapphire Center & Diamond Petals',
-      description: 'A radiant floral blossom ring crowned with an intense oval yellow sapphire surrounded by eight pear-cut diamond petals on a diamond-set band.',
+      gemstones: 'Canary Yellow Crystal Simulant & Pavé CZ Petals',
+      description: 'A radiant floral blossom ring crowned with an intense oval yellow crystal simulant surrounded by eight pear-cut cubic zirconia petals on a pavé-set band.',
       craftsmanship: 'Signature crown basket mount ensuring maximum light dispersion and fire.'
     }
   ];
@@ -190,7 +190,7 @@ export const RoyalSuiteShowcase: React.FC<RoyalSuiteShowcaseProps> = ({
   const selectedPieceData = suiteDetails.find(p => p.id === activeHotspot) || suiteDetails[0];
 
   const whatsappInquiryUrl = `${BRAND_CONFIG.urls.whatsapp}&text=${encodeURIComponent(
-    `Hello ReiStella Concierge, I would love to enquire about the Royal Yellow Sapphire & Diamond Suite (Necklace, Chandelier Earrings, and Ring) seen in the Campaign Film.`
+    `Hello ReiStella Concierge, I would love to enquire about the Royal Yellow Crystal & CZ Suite (Necklace, Chandelier Earrings, and Ring) seen in the Campaign Film.`
   )}`;
 
   return (

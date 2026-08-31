@@ -1,8 +1,9 @@
 import React from 'react';
 import { motion } from 'motion/react';
 import { BRAND_CONFIG } from '../data/brandConfig';
-import { ReiStellaLogo } from '../components/ReiStellaLogo';
 import { Sparkles } from 'lucide-react';
+import blueImage from '../assets/BLUE.jpg';
+import pinkImage from '../assets/PINK.jpg';
 
 interface AboutPageProps {
   onNavigate: (pageId: string) => void;
@@ -15,28 +16,23 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onNavigate }) => {
       {/* ========================================================================= */}
       {/* 1. PAGE INTRODUCTION / HERO                                               */}
       {/* ========================================================================= */}
-      <section className="pt-20 sm:pt-28 pb-14 sm:pb-20 px-6 sm:px-8 lg:px-12 max-w-5xl mx-auto text-center space-y-6">
-        <motion.div 
-          initial={{ opacity: 0, y: -10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          className="flex justify-center mb-4"
-        >
-          <ReiStellaLogo size="md" alt="ReiStella Emblem" />
-        </motion.div>
+      <section className="pt-20 sm:pt-28 pb-14 sm:pb-20 px-6 sm:px-8 lg:px-12 max-w-4xl mx-auto text-center space-y-4 mb-8 sm:mb-12">
+        <div className="flex items-center justify-center space-x-3">
+          <Sparkles className="w-3.5 h-3.5 text-[#D4AF37]" />
+          <span className="text-[10px] sm:text-[11px] tracking-[0.45em] text-[#D4AF37] uppercase font-light">
+            THE ATELIER HERITAGE
+          </span>
+          <Sparkles className="w-3.5 h-3.5 text-[#D4AF37]" />
+        </div>
 
         <motion.div
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.15 }}
+          transition={{ duration: 0.8 }}
           className="space-y-3"
         >
-          <span className="text-[10px] sm:text-xs tracking-[0.45em] text-[#D4AF37] uppercase font-light inline-block">
-            THE MAISON PHILOSOPHY
-          </span>
-          
           <h1 
-            className="text-4xl sm:text-6xl lg:text-7xl text-white font-light tracking-wide uppercase leading-tight"
+            className="text-4xl sm:text-6xl text-white font-light tracking-wide uppercase leading-tight"
             style={{ fontFamily: '"Playfair Display", "Times New Roman", Times, serif' }}
           >
             About ReiStella
@@ -53,12 +49,12 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onNavigate }) => {
           initial={{ scaleX: 0 }}
           animate={{ scaleX: 1 }}
           transition={{ duration: 1, delay: 0.3 }}
-          className="w-16 h-[1px] bg-[#D4AF37]/40 mx-auto mt-6"
+          className="w-12 h-[1px] bg-[#D4AF37]/40 mx-auto mt-6"
         />
       </section>
 
       {/* ========================================================================= */}
-      {/* 2. MAIN BRAND STORY — WHERE DESIGN MEETS EXPRESSION                       */}
+      {/* 2. MAIN BRAND STORY — WHERE DESIGN MEETS EXPRESSION (BLUE.jpg)            */}
       {/* ========================================================================= */}
       <section className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 py-12 sm:py-20">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
@@ -67,7 +63,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onNavigate }) => {
           <div className="lg:col-span-6 relative">
             <div className="aspect-[4/5] bg-[#020F16] border border-[#062B3A] overflow-hidden relative group shadow-2xl">
               <img
-                src={BRAND_CONFIG.images.editorial4}
+                src={blueImage}
                 alt="ReiStella Brand Essence"
                 className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-1000"
                 loading="lazy"
@@ -108,7 +104,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onNavigate }) => {
 
             <div className="space-y-5 text-sm sm:text-base text-neutral-300 font-light leading-relaxed">
               <p>
-                ReiStella was created from a singular vision: to make jewellery more than an accessory. We believe that fine jewellery can become a natural expression of identity, confidence, and personal style.
+                ReiStella was created from a singular vision: to make jewellery more than an accessory. We believe that jewellery can become a natural expression of identity, confidence, and personal style.
               </p>
               <p>
                 Every piece is thoughtfully designed to complement the woman wearing it rather than define her—honouring her presence, elevating her silhouette, and allowing her individuality to speak with effortless poise.
@@ -160,7 +156,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onNavigate }) => {
       </section>
 
       {/* ========================================================================= */}
-      {/* 4. A MANIFESTO OF LIGHT                                                   */}
+      {/* 4. A MANIFESTO OF LIGHT (PINK.jpg)                                        */}
       {/* ========================================================================= */}
       <section className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 py-20 sm:py-28">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
@@ -198,7 +194,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onNavigate }) => {
           <div className="lg:col-span-5 order-1 lg:order-2">
             <div className="aspect-[4/5] bg-[#020F16] border border-[#062B3A] overflow-hidden relative group shadow-2xl">
               <img
-                src={BRAND_CONFIG.images.editorial1}
+                src={pinkImage}
                 alt="ReiStella Manifesto of Light"
                 className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-1000"
                 loading="lazy"

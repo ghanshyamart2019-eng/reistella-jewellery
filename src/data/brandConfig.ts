@@ -53,7 +53,7 @@ export const BRAND_CONFIG = {
   fullName: 'REISTELLA JEWELLERY',
   tagline: 'LET YOUR BRILLIANCE REIGN',
   subTagline: 'THE STORY CONTINUES',
-  positioning: 'PREMIUM FASHION JEWELLERY',
+  positioning: 'PREMIUM COUTURE IMITATION JEWELLERY',
   
   // URLs & Official Social Connections
   urls: {
@@ -106,8 +106,8 @@ export const EDITORIAL_PIECES: JewelleryPiece[] = [
     id: 'sovereign-solar-royal-necklace',
     title: 'The Sovereign Solar Royal Necklace',
     collection: 'Signature Pieces',
-    subtitle: 'High-Jewellery Centerpiece & Motion Campaign Film',
-    description: 'An architectural composition of canary yellow sapphires and pavé diamonds, featuring multi-tiered chandelier pendeloques and floral clusters.',
+    subtitle: 'Couture Centerpiece & Motion Campaign Film',
+    description: 'An architectural composition of canary yellow crystal simulants and pavé cubic zirconia, featuring multi-tiered chandelier pendeloques and floral clusters.',
     imageUrl: BRAND_CONFIG.images.heroReference,
     aspectRatio: '16/9',
     tags: ['Hero Campaign', 'Signature', 'Royal Suite'],
@@ -118,8 +118,8 @@ export const EDITORIAL_PIECES: JewelleryPiece[] = [
     id: 'solaris-bloom-ring',
     title: 'Solaris Bloom Cocktail Ring',
     collection: 'Statement Jewellery',
-    subtitle: 'Canary Yellow Sapphire & Diamond Halo Petals',
-    description: 'A radiant floral blossom ring crowned with an intense canary yellow sapphire surrounded by eight diamond petals on a pavé-set band.',
+    subtitle: 'Canary Crystal Simulant & Pavé CZ Halo Petals',
+    description: 'A radiant floral blossom ring crowned with an intense canary yellow crystal simulant surrounded by eight cubic zirconia petals on a pavé-set band.',
     imageUrl: BRAND_CONFIG.images.editorial3,
     aspectRatio: '1/1',
     tags: ['Statement', 'Royal Suite'],
@@ -129,7 +129,7 @@ export const EDITORIAL_PIECES: JewelleryPiece[] = [
     id: 'etoile-nocturne-earrings',
     title: 'Étoile Chandelier Drop Earrings',
     collection: 'Festive & Occasion',
-    subtitle: 'Articulated Yellow Sapphire & Diamond Drops',
+    subtitle: 'Articulated Yellow Crystal & CZ Drops',
     description: 'Dual-tiered architectural chandelier earrings engineered with featherweight poise, mirroring the grand floral motifs of the centerpiece collar.',
     imageUrl: BRAND_CONFIG.images.editorial2,
     aspectRatio: '4/5',
@@ -140,7 +140,7 @@ export const EDITORIAL_PIECES: JewelleryPiece[] = [
     id: 'celestial-cuff',
     title: 'Aura Pavé Armature',
     collection: 'Everyday Luxury',
-    subtitle: 'Ergonomic Gold & Seamless Pavé',
+    subtitle: 'Ergonomic 18K Gold-Tone Finish & Seamless Pavé',
     description: 'A seamless ribbon of light contouring the wrist with refined discipline and understated power.',
     imageUrl: BRAND_CONFIG.images.editorial5,
     aspectRatio: '4/5',
@@ -151,8 +151,8 @@ export const EDITORIAL_PIECES: JewelleryPiece[] = [
     id: 'velvet-emerald-pendant',
     title: 'Verdant Empress Pendant',
     collection: 'Festive & Occasion',
-    subtitle: 'Deep Tonal Contrast & Diamond Halo',
-    description: 'Rich chromatic intensity framed by precision-cut brilliance, celebrating timeless feminine composure.',
+    subtitle: 'Deep Tonal Contrast & Cubic Zirconia Halo',
+    description: 'Rich emerald-tone crystal framed by precision-cut cubic zirconia brilliance, celebrating timeless feminine composure.',
     imageUrl: BRAND_CONFIG.images.editorial6,
     aspectRatio: '4/5',
     tags: ['Festive', 'Occasion'],
@@ -228,16 +228,16 @@ export const PARTNER_CITIES: PartnerCity[] = [
     description: 'Connect with a ReiStella partner in Ahmedabad for private collection discovery and consultation.'
   },
   {
-    city: 'Vadodara',
-    displayName: 'Vadodara / Baroda',
-    region: 'Gujarat, India',
-    description: 'Connect with a ReiStella partner in Vadodara for curated showcase viewings and advisory.'
-  },
-  {
     city: 'Rajkot',
     displayName: 'Rajkot',
     region: 'Gujarat, India',
     description: 'Connect with a ReiStella partner in Rajkot for styling guidance and campaign pieces.'
+  },
+  {
+    city: 'Vadodara',
+    displayName: 'Vadodara',
+    region: 'Gujarat, India',
+    description: 'Connect with a ReiStella partner in Vadodara for curated showcase viewings and advisory.'
   }
 ];
 
@@ -247,31 +247,31 @@ export const CITY_PARTNERS: CityPartner[] = [
     id: 'ahmedabad',
     cityName: 'Ahmedabad',
     partnerName: 'ReiStella City Concierge',
-    image: 'https://images.unsplash.com/photo-1617806118233-18e1c0c22425?auto=format&fit=crop&q=80&w=800',
+    image: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=85&w=1200',
     whatsappUrl: `${BRAND_CONFIG.urls.whatsapp}&text=${encodeURIComponent(
       'Hello ReiStella Concierge, I would like to connect with the Ahmedabad partner team for a private collection discovery.'
     )}`,
     tagline: 'Private Consultations & Flagship Showcase'
   },
   {
-    id: 'vadodara',
-    cityName: 'Vadodara',
-    partnerName: 'ReiStella City Concierge',
-    image: 'https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?auto=format&fit=crop&q=80&w=800',
-    whatsappUrl: `${BRAND_CONFIG.urls.whatsapp}&text=${encodeURIComponent(
-      'Hello ReiStella Concierge, I would like to connect with the Vadodara / Baroda partner team for private jewellery advisory.'
-    )}`,
-    tagline: 'Curated Showcase & Bespoke Styling'
-  },
-  {
     id: 'rajkot',
     cityName: 'Rajkot',
     partnerName: 'ReiStella City Concierge',
-    image: 'https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?auto=format&fit=crop&q=80&w=800',
+    image: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&q=85&w=1200',
     whatsappUrl: `${BRAND_CONFIG.urls.whatsapp}&text=${encodeURIComponent(
       'Hello ReiStella Concierge, I would like to connect with the Rajkot partner team for signature collection discovery.'
     )}`,
-    tagline: 'High-Jewellery Advisory & Viewings'
+    tagline: 'Couture Jewellery Advisory & Viewings'
+  },
+  {
+    id: 'vadodara',
+    cityName: 'Vadodara',
+    partnerName: 'ReiStella City Concierge',
+    image: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&q=85&w=1200',
+    whatsappUrl: `${BRAND_CONFIG.urls.whatsapp}&text=${encodeURIComponent(
+      'Hello ReiStella Concierge, I would like to connect with the Vadodara partner team for private jewellery advisory.'
+    )}`,
+    tagline: 'Curated Showcase & Bespoke Styling'
   }
 ];
 

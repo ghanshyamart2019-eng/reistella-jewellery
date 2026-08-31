@@ -5,9 +5,10 @@ import { Instagram, Facebook, MessageCircle, ArrowUpRight } from 'lucide-react';
 
 interface FooterProps {
   onNavigate: (pageId: string) => void;
+  onOpenLegal?: (type: 'terms' | 'privacy') => void;
 }
 
-export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
+export const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenLegal }) => {
   const handleNavClick = (pageId: string) => {
     onNavigate(pageId);
   };
@@ -173,13 +174,26 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
           </div>
         </div>
 
-        {/* Copyright & Discreet Legal Notice */}
+        {/* Copyright & Legal Governance Notice */}
         <div className="pt-8 flex flex-col sm:flex-row items-center justify-between text-[11px] text-neutral-400 font-light tracking-widest gap-4">
           <p>© 2026 {BRAND_CONFIG.fullName}. All Rights Reserved.</p>
-          <div className="flex items-center space-x-4 text-[10px] uppercase">
-            <span>{BRAND_CONFIG.tagline}</span>
-            <span className="text-[#D4AF37]">•</span>
-            <span>{BRAND_CONFIG.subTagline}</span>
+          
+          <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-6 text-[10px] uppercase">
+            <button
+              onClick={() => onOpenLegal && onOpenLegal('terms')}
+              className="text-neutral-400 hover:text-[#D4AF37] transition-colors underline-offset-4 hover:underline tracking-wider"
+            >
+              Terms & Conditions
+            </button>
+            <span className="text-[#D4AF37]/50">•</span>
+            <button
+              onClick={() => onOpenLegal && onOpenLegal('privacy')}
+              className="text-neutral-400 hover:text-[#D4AF37] transition-colors underline-offset-4 hover:underline tracking-wider"
+            >
+              Privacy & Policy
+            </button>
+            <span className="text-[#D4AF37]/50">•</span>
+            <span className="text-neutral-400">{BRAND_CONFIG.tagline}</span>
           </div>
         </div>
       </div>

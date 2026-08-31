@@ -9,6 +9,7 @@ import { CollectionsPage } from './pages/CollectionsPage';
 import { FindReistellaPage } from './pages/FindReistellaPage';
 import { ContactPage } from './pages/ContactPage';
 import { EditorialModal } from './components/EditorialModal';
+import { LegalModal } from './components/LegalModal';
 import { JewelleryPiece } from './data/brandConfig';
 
 const SECTION_IDS = ['home', 'about', 'trending', 'collections', 'find', 'contact'];
@@ -16,6 +17,7 @@ const SECTION_IDS = ['home', 'about', 'trending', 'collections', 'find', 'contac
 export function App() {
   const [activePage, setActivePage] = useState<string>('home');
   const [selectedPiece, setSelectedPiece] = useState<JewelleryPiece | null>(null);
+  const [activeLegalType, setActiveLegalType] = useState<'terms' | 'privacy' | null>(null);
   const isScrollingProgrammatically = useRef<boolean>(false);
   const scrollTimeoutRef = useRef<number | null>(null);
 
@@ -165,15 +167,24 @@ export function App() {
         </section>
       </main>
 
-      {/* Global Interactive Piece Lightbox Modal */}
+      {/* Global Interactive Piece Lightbox Modal (for hero/overview selections) */}
       <EditorialModal
         piece={selectedPiece}
         onClose={() => setSelectedPiece(null)}
         onNavigateToFind={() => handleNavigate('find')}
       />
 
+      {/* Global Terms & Conditions / Privacy Policy Modal */}
+      <LegalModal
+        type={activeLegalType}
+        onClose={() => setActiveLegalType(null)}
+      />
+
       {/* Persistent Luxury Footer */}
-      <Footer onNavigate={handleNavigate} />
+      <Footer 
+        onNavigate={handleNavigate} 
+        onOpenLegal={(type) => setActiveLegalType(type)}
+      />
     </div>
   );
 }

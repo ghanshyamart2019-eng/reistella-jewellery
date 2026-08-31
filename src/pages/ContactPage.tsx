@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { BRAND_CONFIG } from '../data/brandConfig';
-import { ReiStellaLogo } from '../components/ReiStellaLogo';
 import {
   MessageCircle,
   Instagram,
@@ -32,21 +31,29 @@ export const ContactPage: React.FC<ContactPageProps> = () => {
   };
 
   return (
-    <div className="bg-[#031820] text-neutral-100 selection:bg-[#D4AF37]/30 selection:text-[#D4AF37] py-20 sm:py-32 border-t border-[#062B3A]">
+    <div className="bg-[#031820] text-neutral-100 selection:bg-[#D4AF37]/30 selection:text-[#D4AF37] pt-20 sm:pt-28 pb-28 border-t border-[#062B3A]">
       {/* Header */}
-      <section className="px-6 sm:px-8 lg:px-12 pb-14 max-w-5xl mx-auto text-center space-y-4">
-        <div className="flex justify-center mb-2">
-          <ReiStellaLogo size="md" alt="ReiStella Emblem" />
+      <section className="px-6 sm:px-8 lg:px-12 pb-14 max-w-4xl mx-auto text-center space-y-4 mb-8 sm:mb-12">
+        <div className="flex items-center justify-center space-x-3">
+          <Sparkles className="w-3.5 h-3.5 text-[#D4AF37]" />
+          <span className="text-[10px] sm:text-[11px] tracking-[0.45em] text-[#D4AF37] uppercase font-light">
+            THE CONCIERGE
+          </span>
+          <Sparkles className="w-3.5 h-3.5 text-[#D4AF37]" />
         </div>
-        <span className="text-[10px] sm:text-[11px] tracking-[0.45em] text-[#D4AF37] uppercase font-light">
-          THE CONCIERGE
-        </span>
-        <h2 className="font-serif-luxury text-4xl sm:text-6xl text-white font-light tracking-wide">
+
+        <h1 
+          className="text-4xl sm:text-6xl text-white font-light tracking-wide uppercase leading-tight"
+          style={{ fontFamily: '"Playfair Display", "Times New Roman", Times, serif' }}
+        >
           Contact ReiStella
-        </h2>
-        <p className="text-xs sm:text-sm text-neutral-300 font-light max-w-xl mx-auto tracking-wider">
+        </h1>
+
+        <p className="text-xs sm:text-sm text-neutral-300 font-light max-w-xl mx-auto tracking-wider leading-relaxed">
           Whether you desire a private viewing, styling advisory, or bespoke collection guidance, our ambassadors await your inquiry.
         </p>
+
+        <div className="w-12 h-[1px] bg-[#D4AF37]/40 mx-auto pt-2" />
       </section>
 
       {/* Main Content: Info & Inquiry Form */}
